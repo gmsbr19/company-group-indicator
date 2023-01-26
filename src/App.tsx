@@ -11,7 +11,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route element={<Admin />} path="/" />
+        <Route element={<Admin golGroups={golGroups} />}  path="/" />
         <Route element={<Show />} path="/show" />
       </Routes>
     </div>
