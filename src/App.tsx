@@ -5,6 +5,8 @@ import Show from './views/Show'
 import { golGroups, group } from './data'
 import { useEffect, useState } from 'react'
 
+// npm install @reduxjs/toolkit react-redux
+
 function App() {
   const [groups, setGroups] = useState<group[]>([])
   const [showingGroups, setShowingGroups] = useState<group[]>([])
@@ -17,7 +19,7 @@ function App() {
     setShowingGroups(groups.filter(group => {
       return group.show === true
     }))
-  }, groups)
+  }, [groups])
 
   const toggleShow = (id: number) => {
     setGroups(groups.map(group => {
@@ -29,7 +31,7 @@ function App() {
     <div>
       <Routes>
         <Route element={<Admin golGroups={groups} showingGroups={showingGroups} toggleShow={toggleShow} />}  path="/" />
-        <Route element={<Show />} path="/show" />
+        <Route element={<Show showingGroups={showingGroups} />} path="/show" />
       </Routes>
     </div>
   )
