@@ -25,6 +25,7 @@ const Admin = ({ golGroups, showingGroups, toggleShow }: Props) => {
               ref={checkboxRef}
               id={group.label}
               onChange={() => toggleShow(group.id)}
+              checked={group.show}
             />
             <label htmlFor={group.label}>{group.label}</label>
           </div>
