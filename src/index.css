@@ -1,0 +1,15 @@
+.group-label{
+    display: block;
+    margin-top: -80px;
+    margin-left: 40%;
+    height: 100%;
+    font-size: 160px;
+}
+
+.container{
+    margin-top: -50px;
+}
+
+.priority-footer{
+    width: 100%;
+}

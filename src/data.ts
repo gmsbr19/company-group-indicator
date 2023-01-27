@@ -11,13 +11,13 @@ export const golGroups: group[] = [
         id: 0,
         label: "1",
         color: "#180f38",
-        show: true,
+        show: false,
         priority: true
     },
     {
         id: 1,
         color: "#211616",
-        show: true,
+        show: false,
         label: "2"
     },
     {
