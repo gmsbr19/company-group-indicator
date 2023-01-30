@@ -24,12 +24,6 @@ export const golGroups: group[] = [
         id: 2,
         color: "#8c2e03",
         show: false,
-        label: "3"
-    },
-    {
-        id: 3,
-        color: "#8c2e03",
-        show: false,
-        label: "4"
+        label: "3 e 4"
     },
 ]

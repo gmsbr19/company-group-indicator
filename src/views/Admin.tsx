@@ -13,8 +13,8 @@ const Admin = ({ golGroups, showingGroups, toggleShow }: Props) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
 
   return (
-    <div className="d-flex align-items-center justify-content-center vw-100 vh-100 flex-column">
-      <div className="bg-light row h-50 w-50 m-0">
+    <div className="d-flex align-items-center vw-100 vh-100 flex-column">
+      <div className="bg-light row h-75 w-75 m-0">
         <Show showingGroups={showingGroups} />
       </div>
       <div className="d-flex gap-4">

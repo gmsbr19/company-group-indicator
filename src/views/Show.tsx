@@ -30,7 +30,7 @@ const Show = ({ showingGroups }: Props) => {
               width="128"
               height="128"
               fill="currentColor"
-              className="bi bi-arrow-down-left"
+              className="bi bi-arrow-down-left position-absolute bottom-0"
               viewBox="0 0 16 16"
             >
               <path
@@ -44,7 +44,7 @@ const Show = ({ showingGroups }: Props) => {
               width="128"
               height="128"
               fill="currentColor"
-              className="bi bi-arrow-down-right position-absolute end-0"
+              className="bi bi-arrow-down-right position-absolute end-0 bottom-0"
               viewBox="0 0 16 16"
             >
               <path
@@ -58,9 +58,9 @@ const Show = ({ showingGroups }: Props) => {
               width="128"
               height="128"
               fill="currentColor"
-              className="bi bi-arrow-down position-absolute bottom-0 start-50 translate-middle"
+              className="bi bi-arrow-down position-absolute start-50 translate-middle"
               viewBox="0 0 16 16"
-              style={{top: "25rem"}}
+              style={{bottom: "-55px"}}
             >
               <path
                 fillRule="evenodd"
