@@ -8,11 +8,11 @@ type Props = {
 
 const Show = ({ showingGroups }: Props) => {
   return (
-    <div className="row">
+    <div className="row m-0 p-0">
       {showingGroups.map((group, i) => (
         <div
           key={i}
-          className="col h-100 text-white"
+          className="col h-100 text-white position-relative"
           style={{ backgroundColor: group.color }}
         >
           <img src={gol} alt="" width="130px" />
@@ -44,7 +44,7 @@ const Show = ({ showingGroups }: Props) => {
               width="128"
               height="128"
               fill="currentColor"
-              className="bi bi-arrow-down-right"
+              className="bi bi-arrow-down-right position-absolute end-0"
               viewBox="0 0 16 16"
             >
               <path
@@ -58,8 +58,9 @@ const Show = ({ showingGroups }: Props) => {
               width="128"
               height="128"
               fill="currentColor"
-              className="bi bi-arrow-down"
+              className="bi bi-arrow-down position-absolute bottom-0 start-50 translate-middle"
               viewBox="0 0 16 16"
+              style={{top: "25rem"}}
             >
               <path
                 fillRule="evenodd"

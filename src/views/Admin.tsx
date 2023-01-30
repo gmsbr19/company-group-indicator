@@ -14,7 +14,7 @@ const Admin = ({ golGroups, showingGroups, toggleShow }: Props) => {
 
   return (
     <div className="d-flex align-items-center justify-content-center vw-100 vh-100 flex-column">
-      <div className="bg-light row h-50 w-50">
+      <div className="bg-light row h-50 w-50 m-0">
         <Show showingGroups={showingGroups} />
       </div>
       <div className="d-flex gap-4">
