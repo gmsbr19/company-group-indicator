@@ -8,9 +8,11 @@ type Props = {
   showingGroups: group[];
   toggleShow: (id: number) => void;
   handleSideChange: (e: HTMLSelectElement, id: number) => void;
+  handleFromChange: (e: HTMLInputElement, id: number) => void;
+  handleToChange: (e: HTMLInputElement, id: number) => void;
 };
 
-const Admin = ({ golGroups, showingGroups, toggleShow, handleSideChange }: Props) => {
+const Admin = ({ golGroups, showingGroups, toggleShow, handleSideChange, handleFromChange, handleToChange }: Props) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -41,11 +43,11 @@ const Admin = ({ golGroups, showingGroups, toggleShow, handleSideChange }: Props
                   <div className="row align-items-center">
                     <div className="col-6 d-flex gap-2">
                       <label className="form-label">De</label>
-                      <input type="number" id="from" className="form-control" />
+                      <input type="number" id="from" className="form-control" onChange={e => handleFromChange(e.target, group.id)} />
                     </div>
                     <div className="col-6 d-flex gap-2">
                       <label className="form-label">Até</label>
-                      <input type="number" id="to" className="form-control" />
+                      <input type="number" id="to" className="form-control" onChange={e => handleToChange(e.target, group.id)} />
                     </div>
                   </div>
                 </div>

@@ -22,6 +22,7 @@ const Show = ({ showingGroups }: Props) => {
               <small className="fs-4 text-muted ms-1">Group</small>
             </div>
             <span className="group-label">{group.label}</span>
+            {group.from && group.to && <span className="align-self-center fs-4">Assentos {group.from} a {group.to}</span>}
           </div>
           <div className="bg-white priority-footer"></div>
           {group.side === "left" ? (

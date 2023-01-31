@@ -3,7 +3,8 @@ export type group = {
     label: string
     color: string
     show: boolean
-    seats: number[]
+    from: string
+    to: string
     side: string
     priority?: boolean
 }
@@ -14,7 +15,8 @@ export const golGroups: group[] = [
         label: "1",
         color: "#180f38",
         show: false,
-        seats: [],
+        from: "",
+        to: "",
         side: "none",
         priority: true
     },
@@ -22,7 +24,8 @@ export const golGroups: group[] = [
         id: 1,
         color: "#211616",
         show: false,
-        seats: [],
+        from: "",
+        to: "",
         side: "none",
         label: "2"
     },
@@ -30,7 +33,8 @@ export const golGroups: group[] = [
         id: 2,
         color: "#8c2e03",
         show: false,
-        seats: [],
+        from: "",
+        to: "",
         side: "none",
         label: "3 e 4"
     },

@@ -33,10 +33,22 @@ function App() {
     }))
   }
 
+  const handleFromChange = (e: HTMLInputElement, id: number) => {
+    setGroups(groups.map(group => {
+      return id === group.id ? {...group, from: e.value} : group
+    }))
+  }
+
+  const handleToChange = (e: HTMLInputElement, id: number) => {
+    setGroups(groups.map(group => {
+      return id === group.id ? {...group, to: e.value} : group
+    }))
+  }
+
   return (
     <div>
       <Routes>
-        <Route element={<Admin golGroups={groups} showingGroups={showingGroups} handleSideChange={handleSideChange} toggleShow={toggleShow} />}  path="/" />
+        <Route element={<Admin golGroups={groups} showingGroups={showingGroups} handleSideChange={handleSideChange} toggleShow={toggleShow} handleFromChange={handleFromChange} handleToChange={handleToChange} />}  path="/" />
         <Route element={<Show showingGroups={showingGroups} />} path="/show" />
       </Routes>
     </div>
