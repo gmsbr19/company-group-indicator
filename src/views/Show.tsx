@@ -12,7 +12,7 @@ const Show = ({ showingGroups }: Props) => {
       {showingGroups.map((group, i) => (
         <div
           key={i}
-          className="col h-100 text-white position-relative"
+          className="col h-100 text-white position-relative p-0"
           style={{ backgroundColor: group.color }}
         >
           <img src={gol} alt="" width="130px" style={{marginBottom: '-50px'}} />
@@ -24,13 +24,25 @@ const Show = ({ showingGroups }: Props) => {
             <span className="group-label">{group.label}</span>
             {group.from && group.to && <span className="align-self-center fs-4">Assentos {group.from} a {group.to}</span>}
           </div>
-          <div className="bg-white priority-footer"></div>
+          {group.priority && <div style={{height: "35%"}} className="bg-white text-dark priority-footer w-100 position-absolute bottom-0 d-flex justify-content-center">
+            <div className="d-flex flex-column align-items-center">
+              <h1>Prioridades por lei</h1>
+              <p className="text-muted m-0">Special assistance</p>
+              <div className="fs-3">
+                <i className="fa-solid fa-wheelchair"></i>
+                <i className="fa-solid fa-person-cane"></i>
+                <i className="fa-solid fa-person-breastfeeding"></i>
+                <i className="fa-solid fa-person-pregnant"></i>
+                <i className="fa-solid fa-ribbon"></i>
+              </div>
+            </div>
+            </div>}
           {group.side === "left" ? (
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="128"
               height="128"
-              fill="currentColor"
+              fill={group.priority ? "black" : "white"}
               className="bi bi-arrow-down-left position-absolute bottom-0"
               viewBox="0 0 16 16"
             >
@@ -44,7 +56,7 @@ const Show = ({ showingGroups }: Props) => {
               xmlns="http://www.w3.org/2000/svg"
               width="128"
               height="128"
-              fill="currentColor"
+              fill={group.priority ? "black" : "white"}
               className="bi bi-arrow-down-right position-absolute end-0 bottom-0"
               viewBox="0 0 16 16"
             >
@@ -58,7 +70,7 @@ const Show = ({ showingGroups }: Props) => {
               xmlns="http://www.w3.org/2000/svg"
               width="128"
               height="128"
-              fill="currentColor"
+              fill={group.priority ? "black" : "white"}
               className="bi bi-arrow-down position-absolute start-50 translate-middle"
               viewBox="0 0 16 16"
               style={{bottom: "-55px"}}
