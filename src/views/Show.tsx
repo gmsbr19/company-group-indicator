@@ -24,8 +24,8 @@ const Show = ({ showingGroups }: Props) => {
             <span className="group-label">{group.label}</span>
             {group.from && group.to && <span className="align-self-center fs-4">Assentos {group.from} a {group.to}</span>}
           </div>
-          {group.priority && <div style={{height: "35%"}} className="bg-white text-dark priority-footer w-100 position-absolute bottom-0 d-flex justify-content-center">
-            <div className="d-flex flex-column align-items-center">
+          {group.priority && <div style={{height: "40%"}} className="bg-white text-dark priority-footer w-100 position-absolute bottom-0 d-flex justify-content-center">
+            <div className="d-flex flex-column align-items-center mt-2">
               <h1>Prioridades por lei</h1>
               <p className="text-muted m-0">Special assistance</p>
               <div className="fs-3">
