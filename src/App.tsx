@@ -27,10 +27,16 @@ function App() {
     }))
   }
 
+  const handleSideChange = (e: HTMLSelectElement, id: number) => {
+    setGroups(groups.map(group => {
+      return id === group.id ? {...group, side: e.options[e.selectedIndex].value} : group
+    }))
+  }
+
   return (
     <div>
       <Routes>
-        <Route element={<Admin golGroups={groups} showingGroups={showingGroups} toggleShow={toggleShow} />}  path="/" />
+        <Route element={<Admin golGroups={groups} showingGroups={showingGroups} handleSideChange={handleSideChange} toggleShow={toggleShow} />}  path="/" />
         <Route element={<Show showingGroups={showingGroups} />} path="/show" />
       </Routes>
     </div>

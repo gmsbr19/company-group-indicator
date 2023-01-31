@@ -4,6 +4,7 @@ export type group = {
     color: string
     show: boolean
     seats: number[]
+    side: string
     priority?: boolean
 }
 
@@ -14,6 +15,7 @@ export const golGroups: group[] = [
         color: "#180f38",
         show: false,
         seats: [],
+        side: "none",
         priority: true
     },
     {
@@ -21,6 +23,7 @@ export const golGroups: group[] = [
         color: "#211616",
         show: false,
         seats: [],
+        side: "none",
         label: "2"
     },
     {
@@ -28,6 +31,7 @@ export const golGroups: group[] = [
         color: "#8c2e03",
         show: false,
         seats: [],
+        side: "none",
         label: "3 e 4"
     },
 ]
