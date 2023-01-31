@@ -15,8 +15,8 @@ const Show = ({ showingGroups }: Props) => {
           className="col h-100 text-white position-relative"
           style={{ backgroundColor: group.color }}
         >
-          <img src={gol} alt="" width="130px" />
-          <div className="container d-flex flex-column">
+          <img src={gol} alt="" width="130px" style={{marginBottom: '-50px'}} />
+          <div className="d-flex flex-column ms-3">
             <div className="d-flex flex-column fs-1 justify-content-center">
               <span>Grupo</span>
               <small className="fs-4 text-muted ms-1">Group</small>
