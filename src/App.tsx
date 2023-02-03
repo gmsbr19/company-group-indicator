@@ -16,10 +16,16 @@ function App() {
   }, [])
 
   useEffect(() => {
+    // setShowingGroups(groups.filter(group => {
+    //   return group.show === true
+    // }))
+  }, [groups])
+
+  const setShow = () => {
     setShowingGroups(groups.filter(group => {
       return group.show === true
     }))
-  }, [groups])
+  }
 
   const toggleShow = (id: number) => {
     setGroups(groups.map(group => {
@@ -48,7 +54,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route element={<Admin golGroups={groups} showingGroups={showingGroups} handleSideChange={handleSideChange} toggleShow={toggleShow} handleFromChange={handleFromChange} handleToChange={handleToChange} />}  path="/" />
+        <Route element={<Admin golGroups={groups} showingGroups={showingGroups} handleSideChange={handleSideChange} toggleShow={toggleShow} handleFromChange={handleFromChange} handleToChange={handleToChange} setShow={setShow} />}  path="/" />
         <Route element={<Show showingGroups={showingGroups} />} path="/show" />
       </Routes>
     </div>

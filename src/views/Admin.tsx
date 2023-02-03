@@ -2,17 +2,19 @@ import { group } from "../data";
 import gol from "../assets/gol.png";
 import { useRef } from "react";
 import Show from "./Show";
+import audio from '../assets/sounds/call-to-attention.mp3'
 
 type Props = {
   golGroups: group[];
   showingGroups: group[];
   toggleShow: (id: number) => void;
+  setShow: () => void;
   handleSideChange: (e: HTMLSelectElement, id: number) => void;
   handleFromChange: (e: HTMLInputElement, id: number) => void;
   handleToChange: (e: HTMLInputElement, id: number) => void;
 };
 
-const Admin = ({ golGroups, showingGroups, toggleShow, handleSideChange, handleFromChange, handleToChange }: Props) => {
+const Admin = ({ golGroups, showingGroups, toggleShow, setShow, handleSideChange, handleFromChange, handleToChange }: Props) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
 
   return (
@@ -54,7 +56,7 @@ const Admin = ({ golGroups, showingGroups, toggleShow, handleSideChange, handleF
                 <div className="col-6 d-flex flex-column">
                   <span className="fs-6 mb-1">Selecione o lado da fila: </span>
                   <select className="form-select" onChange={e => handleSideChange(e.target, group.id)}>
-                    <option defaultValue="none">...</option>
+                    <option defaultValue="none">Nenhum</option>
                     <option value="left">Esquerda</option>
                     <option value="middle">Meio</option>
                     <option value="right">Direita</option>
@@ -64,6 +66,9 @@ const Admin = ({ golGroups, showingGroups, toggleShow, handleSideChange, handleF
             </div>
         ))}
       </div>
+      <button className="btn btn-outline-primary align-self-end me-4 mt-2" onClick={() => {const play = new Audio(audio); play.play(); setShow()}}>
+        <span>Aplicar</span>
+      </button>
     </div>
   );
 };

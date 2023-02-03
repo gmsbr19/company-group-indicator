@@ -23,11 +23,11 @@ export const golGroups: group[] = [
     {
         id: 1,
         color: "#211616",
+        label: "2",
         show: false,
         from: "",
         to: "",
         side: "none",
-        label: "2"
     },
     {
         id: 2,
@@ -38,4 +38,12 @@ export const golGroups: group[] = [
         side: "none",
         label: "3 e 4"
     },
+]
+
+export const latamGroups = [
+    {
+        id: 0,
+        label: "Prioridade",
+
+    }
 ]

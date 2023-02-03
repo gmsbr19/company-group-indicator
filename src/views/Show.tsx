@@ -1,6 +1,5 @@
 import { group } from "../data";
 import gol from "../assets/gol.png";
-import { useEffect, useState } from "react";
 
 type Props = {
   showingGroups: group[];
@@ -26,7 +25,7 @@ const Show = ({ showingGroups }: Props) => {
           </div>
           {group.priority && <div style={{height: "40%"}} className="bg-white text-dark priority-footer w-100 position-absolute bottom-0 d-flex justify-content-center">
             <div className="d-flex flex-column align-items-center mt-2">
-              <h1>Prioridades por lei</h1>
+              <h2>Prioridades por lei</h2>
               <p className="text-muted m-0">Special assistance</p>
               <div className="fs-3">
                 <i className="fa-solid fa-wheelchair"></i>
