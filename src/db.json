@@ -1,0 +1,34 @@
+{
+  "content": [
+    [
+      {
+        "id": 0,
+        "label": "1",
+        "color": "#180f38",
+        "show": true,
+        "from": "10",
+        "to": "30",
+        "side": "left",
+        "priority": true
+      },
+      {
+        "id": 1,
+        "color": "#211616",
+        "label": "2",
+        "show": false,
+        "from": "",
+        "to": "",
+        "side": "none"
+      },
+      {
+        "id": 2,
+        "color": "#8c2e03",
+        "show": true,
+        "from": "12",
+        "to": "56",
+        "side": "right",
+        "label": "3 e 4"
+      }
+    ]
+  ]
+}

@@ -1,6 +1,8 @@
 import {Routes, Route} from 'react-router-dom'
 import Admin from './views/Admin'
 import Show from './views/Show'
+import axios, {AxiosResponse} from 'axios'
+import Groups from './views/Groups'
 
 import { golGroups, group } from './data'
 import { useEffect, useState } from 'react'
@@ -9,10 +11,14 @@ import { useEffect, useState } from 'react'
 
 function App() {
   const [groups, setGroups] = useState<group[]>([])
-  const [showingGroups, setShowingGroups] = useState<group[]>([])
 
   useEffect(() => {
-    setGroups(golGroups)
+    axios
+        .get<group[]>("http://localhost:3000/content/1")
+        .then((res: AxiosResponse) => {
+            console.log(res.data)
+            setGroups(res.data)
+        });
   }, [])
 
   useEffect(() => {
@@ -22,9 +28,7 @@ function App() {
   }, [groups])
 
   const setShow = () => {
-    setShowingGroups(groups.filter(group => {
-      return group.show === true
-    }))
+    axios.put('http://localhost:3000/content/1', [...groups])
   }
 
   const toggleShow = (id: number) => {
@@ -54,8 +58,9 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route element={<Admin golGroups={groups} showingGroups={showingGroups} handleSideChange={handleSideChange} toggleShow={toggleShow} handleFromChange={handleFromChange} handleToChange={handleToChange} setShow={setShow} />}  path="/" />
-        <Route element={<Show showingGroups={showingGroups} />} path="/show" />
+        <Route element={<Admin golGroups={groups} handleSideChange={handleSideChange} toggleShow={toggleShow} handleFromChange={handleFromChange} handleToChange={handleToChange} setShow={setShow} />}  path="/" />
+        <Route element={<Show showingGroups={groups} />} path="/show" />
+        <Route element={<Groups />} path="/groups" />
       </Routes>
     </div>
   )

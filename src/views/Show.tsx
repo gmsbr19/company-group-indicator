@@ -9,7 +9,7 @@ const Show = ({ showingGroups }: Props) => {
   return (
     <div className="row m-0 p-0">
       {showingGroups.map((group, i) => (
-        <div
+        group.show && <div
           key={i}
           className="col h-100 text-white position-relative p-0"
           style={{ backgroundColor: group.color }}
@@ -27,7 +27,7 @@ const Show = ({ showingGroups }: Props) => {
             <div className="d-flex flex-column align-items-center mt-2">
               <h2>Prioridades por lei</h2>
               <p className="text-muted m-0">Special assistance</p>
-              <div className="fs-3">
+              <div className="fs-3 mt-1 d-flex gap-2">
                 <i className="fa-solid fa-wheelchair"></i>
                 <i className="fa-solid fa-person-cane"></i>
                 <i className="fa-solid fa-person-breastfeeding"></i>

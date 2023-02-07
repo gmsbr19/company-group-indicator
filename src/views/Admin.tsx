@@ -1,12 +1,10 @@
 import { group } from "../data";
-import gol from "../assets/gol.png";
 import { useRef } from "react";
 import Show from "./Show";
 import audio from '../assets/sounds/call-to-attention.mp3'
 
 type Props = {
   golGroups: group[];
-  showingGroups: group[];
   toggleShow: (id: number) => void;
   setShow: () => void;
   handleSideChange: (e: HTMLSelectElement, id: number) => void;
@@ -14,13 +12,15 @@ type Props = {
   handleToChange: (e: HTMLInputElement, id: number) => void;
 };
 
-const Admin = ({ golGroups, showingGroups, toggleShow, setShow, handleSideChange, handleFromChange, handleToChange }: Props) => {
+const Admin = ({ golGroups, toggleShow, setShow, handleSideChange, handleFromChange, handleToChange }: Props) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="d-flex align-items-center vw-100 vh-100 flex-column">
-      <div className="bg-light row h-75 w-100 m-0">
-        <Show showingGroups={showingGroups} />
+      <div className="h-75 w-100 bg-black d-flex flex-column align-items-center">
+        <div className="bg-light h-100 w-75 row m-0 bg">
+          <Show showingGroups={golGroups} />
+        </div>
       </div>
       <div className="d-flex gap-4 row vw-100 px-4 mt-2">
         {golGroups.map((group, i) => (
@@ -45,17 +45,17 @@ const Admin = ({ golGroups, showingGroups, toggleShow, setShow, handleSideChange
                   <div className="row align-items-center">
                     <div className="col-6 d-flex gap-2">
                       <label className="form-label">De</label>
-                      <input type="number" id="from" className="form-control" onChange={e => handleFromChange(e.target, group.id)} />
+                      <input type="number" id="from" className="form-control" onChange={e => handleFromChange(e.target, group.id)} value={group.from} />
                     </div>
                     <div className="col-6 d-flex gap-2">
                       <label className="form-label">Até</label>
-                      <input type="number" id="to" className="form-control" onChange={e => handleToChange(e.target, group.id)} />
+                      <input type="number" id="to" className="form-control" onChange={e => handleToChange(e.target, group.id)} value={group.to} />
                     </div>
                   </div>
                 </div>
                 <div className="col-6 d-flex flex-column">
                   <span className="fs-6 mb-1">Selecione o lado da fila: </span>
-                  <select className="form-select" onChange={e => handleSideChange(e.target, group.id)}>
+                  <select className="form-select" onChange={e => handleSideChange(e.target, group.id)} value={group.side}>
                     <option defaultValue="none">Nenhum</option>
                     <option value="left">Esquerda</option>
                     <option value="middle">Meio</option>
@@ -69,6 +69,9 @@ const Admin = ({ golGroups, showingGroups, toggleShow, setShow, handleSideChange
       <button className="btn btn-outline-primary align-self-end me-4 mt-2" onClick={() => {const play = new Audio(audio); play.play(); setShow()}}>
         <span>Aplicar</span>
       </button>
+      <a href="/groups" className="btn btn-primary position-absolute mt-2 me-2" style={{right: "0px"}} target="_blank">
+          Abrir visualização <i className="fa-solid fa-arrow-up-right-from-square"></i>
+      </a>
     </div>
   );
 };
