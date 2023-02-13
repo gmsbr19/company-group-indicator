@@ -11,15 +11,19 @@ import { useEffect, useState } from 'react'
 
 function App() {
   const [groups, setGroups] = useState<group[]>([])
+  const [currentGate, setCurrentGate] = useState<string>("gate1")
 
   useEffect(() => {
-    axios
-        .get<group[]>("http://localhost:3000/content/1")
-        .then((res: AxiosResponse) => {
-            console.log(res.data)
-            setGroups(res.data)
-        });
+    getGroups(currentGate)
   }, [])
+  
+  const getGroups = (group: string) => {
+    axios
+        .get<group[]>(`http://localhost:3000/content/${group}`)
+        .then((res: AxiosResponse) => {
+            setGroups(res.data.groups)
+        });
+  }
 
   useEffect(() => {
     // setShowingGroups(groups.filter(group => {
@@ -28,13 +32,18 @@ function App() {
   }, [groups])
 
   const setShow = () => {
-    axios.put('http://localhost:3000/content/1', [...groups])
+    axios.put(`http://localhost:3000/content/${currentGate}`, {id: currentGate, groups: [...groups]})
   }
 
   const toggleShow = (id: number) => {
     setGroups(groups.map(group => {
       return id === group.id ? {...group, show: !group.show} : group
     }))
+  }
+
+  const handleCurrentGroupChange = (e: HTMLSelectElement) => {
+    setCurrentGate(e.options[e.selectedIndex].value)
+    getGroups(e.options[e.selectedIndex].value)
   }
 
   const handleSideChange = (e: HTMLSelectElement, id: number) => {
@@ -58,7 +67,7 @@ function App() {
   return (
     <div>
       <Routes>
-        <Route element={<Admin golGroups={groups} handleSideChange={handleSideChange} toggleShow={toggleShow} handleFromChange={handleFromChange} handleToChange={handleToChange} setShow={setShow} />}  path="/" />
+        <Route element={<Admin groups={groups} handleSideChange={handleSideChange} toggleShow={toggleShow} handleFromChange={handleFromChange} handleToChange={handleToChange} setShow={setShow} handleCurrentGroupChange={handleCurrentGroupChange} />}  path="/" />
         <Route element={<Show showingGroups={groups} />} path="/show" />
         <Route element={<Groups />} path="/groups" />
       </Routes>

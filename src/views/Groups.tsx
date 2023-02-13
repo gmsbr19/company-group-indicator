@@ -10,10 +10,10 @@ const Groups = () => {
   useEffect(() => {
     setInterval(() => {
         axios
-        .get<group[]>("http://localhost:3000/content/1")
+        .get<group[]>("http://localhost:3000/content/gate1")
         .then((res: AxiosResponse) => {
             console.log(res.data)
-            setShowingGroups(res.data)
+            setShowingGroups(res.data.groups)
         });
     }, 2000)
   }, []);
