@@ -1,5 +1,5 @@
 import { group } from "../data";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import Show from "./Show";
 import audio from "../assets/sounds/call-to-attention.mp3";
 
@@ -10,7 +10,9 @@ type Props = {
   handleSideChange: (e: HTMLSelectElement, id: number) => void;
   handleFromChange: (e: HTMLInputElement, id: number) => void;
   handleToChange: (e: HTMLInputElement, id: number) => void;
-  handleCurrentGroupChange: (e: HTMLSelectElement) => void;
+  setCurrentCompany: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setCurrentGate: React.Dispatch<React.SetStateAction<number | undefined>>;
+  handleCompAndGateChange: () => void;
 };
 
 const Admin = ({
@@ -20,7 +22,9 @@ const Admin = ({
   handleSideChange,
   handleFromChange,
   handleToChange,
-  handleCurrentGroupChange
+  setCurrentGate,
+  setCurrentCompany,
+  handleCompAndGateChange
 }: Props) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
 
@@ -35,26 +39,32 @@ const Admin = ({
         <div className="col-12 row m-0 p-0">
           <div className="d-flex col-3 me-0">
             <span className="fs-6">Companhia aérea: </span>
-            <select className="form-select">
-              <option defaultValue="none" disabled>
+            <select className="form-select" onChange={e => setCurrentCompany(parseInt(e.target.options[e.target.selectedIndex].value))}>
+              <option defaultValue="0">
                 Selecione
               </option>
-              <option value="left">Gol</option>
-              <option value="middle">Azul</option>
-              <option value="right">Latam</option>
+              <option value="1">Gol</option>
+              <option value="3">Azul</option>
+              <option value="2">Latam</option>
             </select>
           </div>
           <div className="d-flex col-3">
             <span className="fs-6">Portão de embarque: </span>
-            <select className="form-select" onChange={e => handleCurrentGroupChange(e.target)}>
-              <option defaultValue="none" disabled>
+            <select className="form-select" onChange={e => setCurrentGate(parseInt(e.target.options[e.target.selectedIndex].value))}>
+              <option defaultValue="0">
                 Selecione
               </option>
-              <option value="gate1">G1</option>
-              <option value="gate2">G2</option>
-              <option value="gate3">G3</option>
+              <option value="1">G1</option>
+              <option value="2">G2</option>
+              <option value="3">G3</option>
+              <option value="4">G4</option>
+              <option value="5">G5</option>
+              <option value="6">G6</option>
+              <option value="7">G7</option>
+              <option value="8">G8</option>
             </select>
           </div>
+          <button className="col-1 btn btn-outline-primary" onClick={() => handleCompAndGateChange()}>Alterar</button>
         </div>
         {groups.map((group, i) => (
           <div key={i} className="card col p-0">
@@ -85,7 +95,7 @@ const Admin = ({
                       id="from"
                       className="form-control"
                       onChange={(e) => handleFromChange(e.target, group.id)}
-                      value={group.from}
+                      value={group.from_seat}
                     />
                   </div>
                   <div className="col-6 d-flex gap-2">
@@ -95,7 +105,7 @@ const Admin = ({
                       id="to"
                       className="form-control"
                       onChange={(e) => handleToChange(e.target, group.id)}
-                      value={group.to}
+                      value={group.to_seat}
                     />
                   </div>
                 </div>
