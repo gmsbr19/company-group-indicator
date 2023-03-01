@@ -23,7 +23,7 @@ const Show = ({ showingGroups }: Props) => {
             <span className="group-label">{group.label}</span>
             {group.from_seat > 0 && group.to_seat > 0 && <span className="align-self-center fs-4">Assentos {group.from_seat} a {group.to_seat}</span>}
           </div>
-          {group.priority && <div style={{height: "40%"}} className="bg-white text-dark priority-footer w-100 position-absolute bottom-0 d-flex justify-content-center">
+          {group.priority === 1 && <div style={{height: "40%"}} className="bg-white text-dark priority-footer w-100 position-absolute bottom-0 d-flex justify-content-center">
             <div className="d-flex flex-column align-items-center mt-2">
               <h2>Prioridades por lei</h2>
               <p className="text-muted m-0">Special assistance</p>
@@ -41,7 +41,7 @@ const Show = ({ showingGroups }: Props) => {
               xmlns="http://www.w3.org/2000/svg"
               width="128"
               height="128"
-              fill={group.priority ? "black" : "white"}
+              fill={group.priority === 1 ? "black" : "white"}
               className="bi bi-arrow-down-left position-absolute bottom-0"
               viewBox="0 0 16 16"
             >
@@ -55,7 +55,7 @@ const Show = ({ showingGroups }: Props) => {
               xmlns="http://www.w3.org/2000/svg"
               width="128"
               height="128"
-              fill={group.priority ? "black" : "white"}
+              fill={group.priority === 1 ? "black" : "white"}
               className="bi bi-arrow-down-right position-absolute end-0 bottom-0"
               viewBox="0 0 16 16"
             >
@@ -69,7 +69,7 @@ const Show = ({ showingGroups }: Props) => {
               xmlns="http://www.w3.org/2000/svg"
               width="128"
               height="128"
-              fill={group.priority ? "black" : "white"}
+              fill={group.priority === 1 ? "black" : "white"}
               className="bi bi-arrow-down position-absolute start-50 translate-middle"
               viewBox="0 0 16 16"
               style={{bottom: "-55px"}}

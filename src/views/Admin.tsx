@@ -10,8 +10,8 @@ type Props = {
   handleSideChange: (e: HTMLSelectElement, id: number) => void;
   handleFromChange: (e: HTMLInputElement, id: number) => void;
   handleToChange: (e: HTMLInputElement, id: number) => void;
-  setCurrentCompany: React.Dispatch<React.SetStateAction<number | undefined>>;
-  setCurrentGate: React.Dispatch<React.SetStateAction<number | undefined>>;
+  setCurrentCompany: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentGate: React.Dispatch<React.SetStateAction<number>>;
   handleCompAndGateChange: () => void;
 };
 
@@ -95,7 +95,7 @@ const Admin = ({
                       id="from"
                       className="form-control"
                       onChange={(e) => handleFromChange(e.target, group.id)}
-                      value={group.from_seat}
+                      value={group.from_seat > 0 ? group.from_seat : ""}
                     />
                   </div>
                   <div className="col-6 d-flex gap-2">
@@ -105,7 +105,7 @@ const Admin = ({
                       id="to"
                       className="form-control"
                       onChange={(e) => handleToChange(e.target, group.id)}
-                      value={group.to_seat}
+                      value={group.to_seat > 0 ? group.to_seat : ""}
                     />
                   </div>
                 </div>
@@ -127,7 +127,7 @@ const Admin = ({
           </div>
         ))}
       </div>
-      <button
+      {groups.length > 1 && <button
         className="btn btn-outline-primary align-self-end me-4 mt-2"
         onClick={() => {
           const play = new Audio(audio);
@@ -136,7 +136,7 @@ const Admin = ({
         }}
       >
         <span>Aplicar</span>
-      </button>
+      </button>}
       <a
         href="/groups"
         className="btn btn-primary position-absolute mt-2 me-2"
