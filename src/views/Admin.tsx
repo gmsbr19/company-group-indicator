@@ -1,5 +1,6 @@
 import { group } from "../data";
 import { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import Show from "./Show";
 import audio from "../assets/sounds/call-to-attention.mp3";
 
@@ -10,9 +11,6 @@ type Props = {
   handleSideChange: (e: HTMLSelectElement, id: number) => void;
   handleFromChange: (e: HTMLInputElement, id: number) => void;
   handleToChange: (e: HTMLInputElement, id: number) => void;
-  setCurrentCompany: React.Dispatch<React.SetStateAction<number>>;
-  setCurrentGate: React.Dispatch<React.SetStateAction<number>>;
-  handleCompAndGateChange: () => void;
 };
 
 const Admin = ({
@@ -22,9 +20,6 @@ const Admin = ({
   handleSideChange,
   handleFromChange,
   handleToChange,
-  setCurrentGate,
-  setCurrentCompany,
-  handleCompAndGateChange
 }: Props) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
 
@@ -36,36 +31,6 @@ const Admin = ({
         </div>
       </div>
       <div className="d-flex gap-4 row vw-100 px-4 mt-2">
-        <div className="col-12 row m-0 p-0">
-          <div className="d-flex col-3 me-0">
-            <span className="fs-6">Companhia aérea: </span>
-            <select className="form-select" onChange={e => setCurrentCompany(parseInt(e.target.options[e.target.selectedIndex].value))}>
-              <option defaultValue="0">
-                Selecione
-              </option>
-              <option value="1">Gol</option>
-              <option value="3">Azul</option>
-              <option value="2">Latam</option>
-            </select>
-          </div>
-          <div className="d-flex col-3">
-            <span className="fs-6">Portão de embarque: </span>
-            <select className="form-select" onChange={e => setCurrentGate(parseInt(e.target.options[e.target.selectedIndex].value))}>
-              <option defaultValue="0">
-                Selecione
-              </option>
-              <option value="1">G1</option>
-              <option value="2">G2</option>
-              <option value="3">G3</option>
-              <option value="4">G4</option>
-              <option value="5">G5</option>
-              <option value="6">G6</option>
-              <option value="7">G7</option>
-              <option value="8">G8</option>
-            </select>
-          </div>
-          <button className="col-1 btn btn-outline-primary" onClick={() => handleCompAndGateChange()}>Alterar</button>
-        </div>
         {groups.map((group, i) => (
           <div key={i} className="card col p-0">
             <div className="card-header d-flex gap-1 align-items-center">
@@ -127,16 +92,16 @@ const Admin = ({
           </div>
         ))}
       </div>
-      {groups.length > 1 && <button
-        className="btn btn-outline-primary align-self-end me-4 mt-2"
-        onClick={() => {
-          const play = new Audio(audio);
-          play.play();
-          setShow();
-        }}
-      >
-        <span>Aplicar</span>
-      </button>}
+      {groups.length > 1 && (
+        <button
+          className="btn btn-outline-primary align-self-end me-4 mt-2"
+          onClick={() => {
+            setShow();
+          }}
+        >
+          <span>Aplicar</span>
+        </button>
+      )}
       <a
         href="/groups"
         className="btn btn-primary position-absolute mt-2 me-2"
@@ -146,6 +111,13 @@ const Admin = ({
         Abrir visualização{" "}
         <i className="fa-solid fa-arrow-up-right-from-square"></i>
       </a>
+      <Link
+        to="/"
+        className="btn btn-primary position-absolute mt-2 ms-2"
+        style={{ left: "0px" }}
+      >
+        <i className="fa-solid fa-arrow-left"></i>
+      </Link>
     </div>
   );
 };

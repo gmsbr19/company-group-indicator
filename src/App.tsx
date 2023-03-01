@@ -3,9 +3,13 @@ import Admin from "./views/Admin";
 import Show from "./views/Show";
 import axios, { AxiosResponse } from "axios";
 import Groups from "./views/Groups";
+import Start from "./views/Start";
 
 import { group } from "./data";
 import { useEffect, useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import audio from "./assets/sounds/call-to-attention.mp3";
 
 // npm install @reduxjs/toolkit react-redux
 
@@ -26,37 +30,42 @@ function App() {
   };
 
   const setShow = () => {
-    for (let group of showingGroups){
-      console.log(group)
-      axios.put(`https://localhost:44353/api/group`, {...group, show: group.show === true ? 1 : 0});
+    const resArr: number[] = [];
+    for (let group of showingGroups) {
+      const res = axios.put(`https://localhost:44353/api/group`, {
+        ...group,
+        show: group.show === true ? 1 : 0,
+      });
+      res.then((r) => resArr.push(r.status));
     }
-    getGroups()
+    if (resArr.every((e) => e === 200)) {
+      toast.success("Atualizado com sucesso!");
+      const play = new Audio(audio);
+      play.play();
+    }
+    getGroups();
   };
 
   const handleCompAndGateChange = () => {
-    if(currentCompany > 0 && currentGate > 0){
+    if (currentCompany > 0 && currentGate > 0) {
       setShowingGroups(
         groups.filter(
           (e) => e.company_id === currentCompany && e.gate_id === currentGate
         )
       );
-      console.log(showingGroups, currentCompany, currentGate);
     } else {
-      window.alert("Insira a companhia e o portão corretamente")
+      window.alert("Insira a companhia e o portão corretamente");
     }
-    getGroups()
+    getGroups();
   };
 
   const toggleShow = (id: number) => {
-    console.log(id)
     setShowingGroups(
       showingGroups.map((group) => {
-        return id === group.id
-          ? { ...group, show: !group.show }
-          : group;
+        return id === group.id ? { ...group, show: !group.show } : group;
       })
     );
-    console.log(showingGroups[id - 1])
+    console.log(showingGroups[id - 1]);
   };
 
   const handleSideChange = (e: HTMLSelectElement, id: number) => {
@@ -72,7 +81,9 @@ function App() {
   const handleFromChange = (e: HTMLInputElement, id: number) => {
     setShowingGroups(
       showingGroups.map((group) => {
-        return id === group.id ? { ...group, from_seat: parseInt(e.value) } : group;
+        return id === group.id
+          ? { ...group, from_seat: parseInt(e.value) }
+          : group;
       })
     );
   };
@@ -80,7 +91,9 @@ function App() {
   const handleToChange = (e: HTMLInputElement, id: number) => {
     setShowingGroups(
       showingGroups.map((group) => {
-        return id === group.id ? { ...group, to_seat: parseInt(e.value) } : group;
+        return id === group.id
+          ? { ...group, to_seat: parseInt(e.value) }
+          : group;
       })
     );
   };
@@ -97,16 +110,38 @@ function App() {
               handleFromChange={handleFromChange}
               handleToChange={handleToChange}
               setShow={setShow}
+            />
+          }
+          path="/admin"
+        />
+        <Route element={<Show showingGroups={showingGroups} />} path="/show" />
+        <Route element={<Groups />} path="/groups" />
+        <Route
+          element={
+            <Start
+              groups={showingGroups}
+              handleCompAndGateChange={handleCompAndGateChange}
               setCurrentGate={setCurrentGate}
               setCurrentCompany={setCurrentCompany}
-              handleCompAndGateChange={handleCompAndGateChange}
+              currentCompany={currentCompany}
+              currentGate={currentGate}
             />
           }
           path="/"
         />
-        <Route element={<Show showingGroups={showingGroups} />} path="/show" />
-        <Route element={<Groups />} path="/groups" />
       </Routes>
+      <ToastContainer
+        position="bottom-left"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </div>
   );
 }
