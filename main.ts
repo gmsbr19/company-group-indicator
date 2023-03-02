@@ -19,7 +19,9 @@ function createMainWindow() {
     mainWindow.webContents.openDevTools()
     mainWindow.setMenu(null)
     mainWindow.maximize()
-    mainWindow.loadURL('http://localhost:5173/');
+    // mainWindow.loadURL('http://localhost:5173/');
+    mainWindow.loadFile(path.join(__dirname, '/dist/index.html'))
+    mainWindow.show()
 }
 
 app.whenReady().then(() => {
