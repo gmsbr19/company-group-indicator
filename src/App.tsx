@@ -19,9 +19,21 @@ function App() {
   const [currentGate, setCurrentGate] = useState<number>(0);
   const [currentCompany, setCurrentCompany] = useState<number>(0);
 
+  const [storedCurrentGate, setStoredCurrentGate] = useState<any>(localStorage.getItem('currentGate'));
+  const [storedCurrentCompany, setStoredCurrentCompany] = useState<any>(localStorage.getItem('currentCompany'));
+
   useEffect(() => {
     getGroups();
   }, []);
+
+  const openGroupsWindow = () => {
+    localStorage.setItem('currentGate', `${currentGate}`)
+    localStorage.setItem('currentCompany', `${currentCompany}`)
+
+    setStoredCurrentCompany(currentCompany)
+    setStoredCurrentGate(currentGate)
+    console.log(storedCurrentGate, storedCurrentCompany)
+  }
 
   const getGroups = () => {
     axios
@@ -110,6 +122,7 @@ function App() {
               handleFromChange={handleFromChange}
               handleToChange={handleToChange}
               setShow={setShow}
+              openGroupsWindow={openGroupsWindow}
             />
           }
           path="/admin"
@@ -125,6 +138,7 @@ function App() {
               setCurrentCompany={setCurrentCompany}
               currentCompany={currentCompany}
               currentGate={currentGate}
+              openGroupsWindow={openGroupsWindow}
             />
           }
           path="/"

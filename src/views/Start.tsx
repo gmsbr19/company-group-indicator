@@ -9,9 +9,10 @@ type Props = {
     handleCompAndGateChange: () => void;
     currentGate: number;
     currentCompany: number;
+    openGroupsWindow: () => void;
 }
 
-const Start = ({groups, setCurrentCompany, setCurrentGate, handleCompAndGateChange, currentCompany, currentGate}: Props) => {
+const Start = ({groups, setCurrentCompany, setCurrentGate, handleCompAndGateChange, currentCompany, currentGate, openGroupsWindow}: Props) => {
   return (
     <div className="d-flex flex-column align-items-center justify-content-center">
       <img src={logo} />
@@ -61,7 +62,7 @@ const Start = ({groups, setCurrentCompany, setCurrentGate, handleCompAndGateChan
             <Link
                 to="/admin"
                 className="btn btn-primary col-4"
-                onClick={() => handleCompAndGateChange()}
+                onClick={() => {handleCompAndGateChange(); openGroupsWindow()}}
             >
                 Entrar
             </Link>

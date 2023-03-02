@@ -11,6 +11,7 @@ type Props = {
   handleSideChange: (e: HTMLSelectElement, id: number) => void;
   handleFromChange: (e: HTMLInputElement, id: number) => void;
   handleToChange: (e: HTMLInputElement, id: number) => void;
+  openGroupsWindow: () => void;
 };
 
 const Admin = ({
@@ -20,6 +21,7 @@ const Admin = ({
   handleSideChange,
   handleFromChange,
   handleToChange,
+  openGroupsWindow
 }: Props) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
 
@@ -102,15 +104,16 @@ const Admin = ({
           <span>Aplicar</span>
         </button>
       )}
-      <a
+      {/* <a
         href="/groups"
         className="btn btn-primary position-absolute mt-2 me-2"
         style={{ right: "0px" }}
+        onClick={() => openGroupsWindow()}
         target="_blank"
       >
         Abrir visualização{" "}
         <i className="fa-solid fa-arrow-up-right-from-square"></i>
-      </a>
+      </a> */}
       <Link
         to="/"
         className="btn btn-primary position-absolute mt-2 ms-2"
