@@ -11,7 +11,7 @@ type Props = {
   handleSideChange: (e: HTMLSelectElement, id: number) => void;
   handleFromChange: (e: HTMLInputElement, id: number) => void;
   handleToChange: (e: HTMLInputElement, id: number) => void;
-  openGroupsWindow: () => void;
+  isLoading: boolean
 };
 
 const Admin = ({
@@ -21,12 +21,18 @@ const Admin = ({
   handleSideChange,
   handleFromChange,
   handleToChange,
-  openGroupsWindow
+  isLoading
 }: Props) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
 
   return (
     <div className="d-flex align-items-center vw-100 vh-100 flex-column">
+      {isLoading && <div className="position-absolute vw-100 vh-100 loadingScreen d-flex align-items-center justify-content-center">
+        <div className="d-flex flex-column align-items-center text-light gap-3">
+          <div className="spinner-border" role="status"></div>
+          <span>Carregando...</span>
+        </div>
+      </div>}
       <div className="h-75 w-100 bg-black d-flex flex-column align-items-center">
         <div className="bg-light h-100 w-75 row m-0 bg">
           <Show showingGroups={groups} />
@@ -62,7 +68,7 @@ const Admin = ({
                       id="from"
                       className="form-control"
                       onChange={(e) => handleFromChange(e.target, group.id)}
-                      value={group.from_seat > 0 ? group.from_seat : ""}
+                      value={group.from_seat > 0 ? group.from_seat : 0}
                     />
                   </div>
                   <div className="col-6 d-flex gap-2">
@@ -72,7 +78,7 @@ const Admin = ({
                       id="to"
                       className="form-control"
                       onChange={(e) => handleToChange(e.target, group.id)}
-                      value={group.to_seat > 0 ? group.to_seat : ""}
+                      value={group.to_seat > 0 ? group.to_seat : 0}
                     />
                   </div>
                 </div>
@@ -104,19 +110,18 @@ const Admin = ({
           <span>Aplicar</span>
         </button>
       )}
-      {/* <a
+      <a
         href="/groups"
         className="btn btn-primary position-absolute mt-2 me-2"
         style={{ right: "0px" }}
-        onClick={() => openGroupsWindow()}
         target="_blank"
       >
         Abrir visualização{" "}
         <i className="fa-solid fa-arrow-up-right-from-square"></i>
-      </a> */}
+      </a>
       <Link
         to="/"
-        className="btn btn-primary position-absolute mt-2 ms-2"
+        className="btn btn-primary position-absolute mt-2 ms-2 backBtn"
         style={{ left: "0px" }}
       >
         <i className="fa-solid fa-arrow-left"></i>

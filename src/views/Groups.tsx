@@ -1,37 +1,37 @@
 import { group } from "../data";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import { useEffect, useState } from "react";
 import Show from "./Show";
 
 const Groups = () => {
   const [groups, setGroups] = useState<group[]>([])
   const [showingGroups, setShowingGroups] = useState<group[]>([]);
-  const [currentCompany, setCurrentCompany] = useState<any>(localStorage.getItem('company'))
-  const [currentGate, setCurrentGate] = useState<any>(localStorage.getItem('gate'))
+  const [currentCompany, setCurrentCompany] = useState<string>("")
+  const [currentGate, setCurrentGate] = useState<string>("")
 
   useEffect(() => {
-    const gate = localStorage.getItem('gate');
-    const company = localStorage.getItem('company');
-    console.log(gate, company)
+    let cookies = document.cookie;
+    setCurrentCompany(cookies.split(" ").map(e => e.split("="))[0][1].charAt(0))
+    setCurrentGate(cookies.split(" ").map(e => e.split("="))[1][1].charAt(0))
+    
+    getGroups()
     setInterval(() => {
       getGroups()
-    }, 1000)
+    }, 5000)
 
   }, []);
 
   const getGroups = () => {
     axios
       .get("https://localhost:44353/api/group")
-      .then((res) => setShowingGroups(
-        res.data.filter(
-          (e: group) => e.company_id === parseInt(currentCompany) && e.gate_id === parseInt(currentGate)
-        )
-      ));
+      .then((res) => setGroups(res.data));
   };
 
   return (
     <div className="row m-0 p-0 vh-100">
-      <Show showingGroups={showingGroups} />
+      <Show showingGroups={groups.filter(
+          (e: group) => e.company_id === parseInt(currentCompany) && e.gate_id === parseInt(currentGate)
+        )} />
     </div>
   );
 };

@@ -13,3 +13,12 @@
 .priority-footer{
     width: 100%;
 }
+
+.loadingScreen {
+    z-index: 100;
+    background-color: #0000009b;
+}
+
+.backBtn {
+    z-index: 101;
+}

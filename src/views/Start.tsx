@@ -3,16 +3,14 @@ import { group } from "../data";
 import { Link } from "react-router-dom";
 
 type Props = {
-    groups: group[];
     setCurrentCompany: React.Dispatch<React.SetStateAction<number>>;
     setCurrentGate: React.Dispatch<React.SetStateAction<number>>;
     handleCompAndGateChange: () => void;
     currentGate: number;
     currentCompany: number;
-    openGroupsWindow: () => void;
 }
 
-const Start = ({groups, setCurrentCompany, setCurrentGate, handleCompAndGateChange, currentCompany, currentGate, openGroupsWindow}: Props) => {
+const Start = ({setCurrentCompany, setCurrentGate, handleCompAndGateChange, currentCompany, currentGate}: Props) => {
   return (
     <div className="d-flex flex-column align-items-center justify-content-center">
       <img src={logo} />
@@ -59,13 +57,12 @@ const Start = ({groups, setCurrentCompany, setCurrentGate, handleCompAndGateChan
             </select>
           </div>
           <div className="col-12 mt-2 d-flex justify-content-end">
-            <Link
-                to="/admin"
+            <button
                 className="btn btn-primary col-4"
-                onClick={() => {handleCompAndGateChange(); openGroupsWindow()}}
+                onClick={() => handleCompAndGateChange()}
             >
                 Entrar
-            </Link>
+            </button>
           </div>
         </div>
       </div>

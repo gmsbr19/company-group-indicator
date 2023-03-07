@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import Admin from "./views/Admin";
 import Show from "./views/Show";
 import axios, { AxiosResponse } from "axios";
@@ -18,35 +18,29 @@ function App() {
   const [showingGroups, setShowingGroups] = useState<group[]>([]);
   const [currentGate, setCurrentGate] = useState<number>(0);
   const [currentCompany, setCurrentCompany] = useState<number>(0);
-
-  const [storedCurrentGate, setStoredCurrentGate] = useState<any>(localStorage.getItem('currentGate'));
-  const [storedCurrentCompany, setStoredCurrentCompany] = useState<any>(localStorage.getItem('currentCompany'));
+  const [isLoading, setIsLoading] = useState<boolean>(true)
+  const navigate = useNavigate()
 
   useEffect(() => {
     getGroups();
   }, []);
 
-  const openGroupsWindow = () => {
-    localStorage.setItem('currentGate', `${currentGate}`)
-    localStorage.setItem('currentCompany', `${currentCompany}`)
-
-    setStoredCurrentCompany(currentCompany)
-    setStoredCurrentGate(currentGate)
-    console.log(storedCurrentGate, storedCurrentCompany)
-  }
-
   const getGroups = () => {
+    setIsLoading(true)
     axios
       .get("https://localhost:44353/api/group")
-      .then((res) => setGroups(res.data));
+      .then((res) => setGroups(res.data))
+      .then(() => setIsLoading(false))
   };
 
   const setShow = () => {
+    localStorage.setItem('showingGroups', JSON.stringify(showingGroups))
     const resArr: number[] = [];
+    console.log(showingGroups)
     for (let group of showingGroups) {
       const res = axios.put(`https://localhost:44353/api/group`, {
         ...group,
-        show: group.show === true ? 1 : 0,
+        show: group.show === true ? 1 : 0
       });
       res.then((r) => resArr.push(r.status));
     }
@@ -60,13 +54,17 @@ function App() {
 
   const handleCompAndGateChange = () => {
     if (currentCompany > 0 && currentGate > 0) {
+      document.cookie = `currentGate=${currentGate}`
+      document.cookie = `currentCompany=${currentCompany}`
       setShowingGroups(
         groups.filter(
           (e) => e.company_id === currentCompany && e.gate_id === currentGate
         )
       );
+      navigate('/admin')
     } else {
       window.alert("Insira a companhia e o portão corretamente");
+      return false
     }
     getGroups();
   };
@@ -122,7 +120,7 @@ function App() {
               handleFromChange={handleFromChange}
               handleToChange={handleToChange}
               setShow={setShow}
-              openGroupsWindow={openGroupsWindow}
+              isLoading={isLoading}
             />
           }
           path="/admin"
@@ -132,13 +130,11 @@ function App() {
         <Route
           element={
             <Start
-              groups={showingGroups}
               handleCompAndGateChange={handleCompAndGateChange}
               setCurrentGate={setCurrentGate}
               setCurrentCompany={setCurrentCompany}
               currentCompany={currentCompany}
               currentGate={currentGate}
-              openGroupsWindow={openGroupsWindow}
             />
           }
           path="/"
