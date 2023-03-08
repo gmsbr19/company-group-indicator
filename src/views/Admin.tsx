@@ -1,5 +1,5 @@
 import { group } from "../data";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import Show from "./Show";
 import audio from "../assets/sounds/call-to-attention.mp3";
@@ -11,7 +11,9 @@ type Props = {
   handleSideChange: (e: HTMLSelectElement, id: number) => void;
   handleFromChange: (e: HTMLInputElement, id: number) => void;
   handleToChange: (e: HTMLInputElement, id: number) => void;
-  isLoading: boolean
+  handleMessageChange: (e: HTMLInputElement, id: number) => void;
+  isLoading: boolean;
+  getGroups: () => void
 };
 
 const Admin = ({
@@ -20,10 +22,18 @@ const Admin = ({
   setShow,
   handleSideChange,
   handleFromChange,
+  handleMessageChange,
   handleToChange,
+  getGroups,
   isLoading
 }: Props) => {
   const checkboxRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if(groups.length === 0){
+      getGroups()
+    }
+  }, [])
 
   return (
     <div className="d-flex align-items-center vw-100 vh-100 flex-column">
@@ -95,6 +105,16 @@ const Admin = ({
                   <option value="middle">Meio</option>
                   <option value="right">Direita</option>
                 </select>
+              </div>
+              <div className="col-12 d-flex flex-column">
+                <span className="fs-6 mb-1">Mensagem: </span>
+                <input
+                      type="text"
+                      className="form-control mensagemInput"
+                      onChange={(e) => handleMessageChange(e.target, group.id)}
+                      maxLength={132}
+                      value={group.message}
+                    />
               </div>
             </div>
           </div>

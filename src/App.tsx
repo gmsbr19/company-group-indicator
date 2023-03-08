@@ -8,79 +8,87 @@ import Start from "./views/Start";
 import { group } from "./data";
 import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
-import 'react-toastify/dist/ReactToastify.css';
+import "react-toastify/dist/ReactToastify.css";
 import audio from "./assets/sounds/call-to-attention.mp3";
 
 // npm install @reduxjs/toolkit react-redux
 
 function App() {
   const [groups, setGroups] = useState<group[]>([]);
-  const [showingGroups, setShowingGroups] = useState<group[]>([]);
   const [currentGate, setCurrentGate] = useState<number>(0);
   const [currentCompany, setCurrentCompany] = useState<number>(0);
-  const [isLoading, setIsLoading] = useState<boolean>(true)
-  const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    getGroups();
+   
   }, []);
 
   const getGroups = () => {
-    setIsLoading(true)
+    setIsLoading(true);
     axios
-      .get("https://localhost:44353/api/group")
+      .get(
+        `https://localhost:44353/api/Group?currentGate=${currentGate}&currentCompany=${currentCompany}`
+      )
       .then((res) => setGroups(res.data))
-      .then(() => setIsLoading(false))
+      .then(() => setIsLoading(false));
   };
 
+  function sleep(ms: number) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
   const setShow = () => {
-    localStorage.setItem('showingGroups', JSON.stringify(showingGroups))
     const resArr: number[] = [];
-    console.log(showingGroups)
-    for (let group of showingGroups) {
-      const res = axios.put(`https://localhost:44353/api/group`, {
-        ...group,
-        show: group.show === true ? 1 : 0
+    console.log(groups);
+    for (let group of groups) {
+      sleep(1).then(() => {
+        const res = axios.put(`https://localhost:44353/api/Group`, {
+          ...group,
+          show: group.show === true ? 1 : 0,
+        });
+        res.then((r) => resArr.push(r.status));
       });
-      res.then((r) => resArr.push(r.status));
     }
     if (resArr.every((e) => e === 200)) {
       toast.success("Atualizado com sucesso!");
       const play = new Audio(audio);
       play.play();
     }
-    getGroups();
   };
 
   const handleCompAndGateChange = () => {
     if (currentCompany > 0 && currentGate > 0) {
-      document.cookie = `currentGate=${currentGate}`
-      document.cookie = `currentCompany=${currentCompany}`
-      setShowingGroups(
-        groups.filter(
-          (e) => e.company_id === currentCompany && e.gate_id === currentGate
-        )
-      );
-      navigate('/admin')
+      document.cookie = `currentGate=${currentGate}`;
+      document.cookie = `currentCompany=${currentCompany}`;
+      getGroups();
+      navigate("/admin");
+      console.log(groups);
     } else {
       window.alert("Insira a companhia e o portão corretamente");
-      return false
+      return false;
     }
-    getGroups();
   };
 
   const toggleShow = (id: number) => {
-    setShowingGroups(
-      showingGroups.map((group) => {
+    setGroups(
+      groups.map((group) => {
         return id === group.id ? { ...group, show: !group.show } : group;
       })
     );
-    console.log(showingGroups[id - 1]);
+    console.log(groups[id - 1]);
+  };
+
+  const handleMessageChange = (e: HTMLInputElement, id: number) => {
+    setGroups(
+      groups.map((group) => {
+        return id === group.id ? { ...group, message: e.value } : group;
+      })
+    );
   };
 
   const handleSideChange = (e: HTMLSelectElement, id: number) => {
-    setShowingGroups(
-      showingGroups.map((group) => {
+    setGroups(
+      groups.map((group) => {
         return id === group.id
           ? { ...group, side: e.options[e.selectedIndex].value }
           : group;
@@ -89,8 +97,8 @@ function App() {
   };
 
   const handleFromChange = (e: HTMLInputElement, id: number) => {
-    setShowingGroups(
-      showingGroups.map((group) => {
+    setGroups(
+      groups.map((group) => {
         return id === group.id
           ? { ...group, from_seat: parseInt(e.value) }
           : group;
@@ -99,8 +107,8 @@ function App() {
   };
 
   const handleToChange = (e: HTMLInputElement, id: number) => {
-    setShowingGroups(
-      showingGroups.map((group) => {
+    setGroups(
+      groups.map((group) => {
         return id === group.id
           ? { ...group, to_seat: parseInt(e.value) }
           : group;
@@ -114,18 +122,19 @@ function App() {
         <Route
           element={
             <Admin
-              groups={showingGroups}
+              groups={groups}
               handleSideChange={handleSideChange}
               toggleShow={toggleShow}
               handleFromChange={handleFromChange}
               handleToChange={handleToChange}
+              handleMessageChange={handleMessageChange}
               setShow={setShow}
               isLoading={isLoading}
+              getGroups={getGroups}
             />
           }
           path="/admin"
         />
-        <Route element={<Show showingGroups={showingGroups} />} path="/show" />
         <Route element={<Groups />} path="/groups" />
         <Route
           element={
