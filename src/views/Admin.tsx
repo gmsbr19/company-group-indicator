@@ -30,10 +30,13 @@ const Admin = ({
   const checkboxRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if(groups.length === 0){
-      getGroups()
-    }
-  }, [])
+    const handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      event.preventDefault();
+      event.returnValue = '';
+    };
+
+    window.addEventListener('beforeunload', handleBeforeUnload);
+  }, []);
 
   return (
     <div className="d-flex align-items-center vw-100 vh-100 flex-column">
@@ -48,7 +51,7 @@ const Admin = ({
           <Show showingGroups={groups} />
         </div>
       </div>
-      <div className="d-flex gap-4 row vw-100 px-4 mt-2">
+      <div className="d-flex gap-2 row vw-100 px-4 mt-2">
         {groups.map((group, i) => (
           <div key={i} className="card col p-0">
             <div className="card-header d-flex gap-1 align-items-center">
@@ -122,7 +125,7 @@ const Admin = ({
       </div>
       {groups.length > 1 && (
         <button
-          className="btn btn-outline-primary align-self-end me-4 mt-2"
+          className="btn btn-outline-primary align-self-end me-4 my-2"
           onClick={() => {
             setShow();
           }}
