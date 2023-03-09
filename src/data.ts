@@ -7,6 +7,7 @@ export type group = {
     to_seat: number
     side: string
     message: string
+    position: number
     priority?: number | boolean
     company_id: number
     gate_id: number

@@ -6,10 +6,11 @@ import Groups from "./views/Groups";
 import Start from "./views/Start";
 
 import { group } from "./data";
-import { useEffect, useState } from "react";
+import { useEffect, useState, DragEvent } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import audio from "./assets/sounds/call-to-attention.mp3";
+import { DropResult } from "react-beautiful-dnd";
 
 // npm install @reduxjs/toolkit react-redux
 
@@ -40,15 +41,15 @@ function App() {
   const setShow = () => {
     const resArr: number[] = [];
     console.log(groups);
-    for (let group of groups) {
-      sleep(1).then(() => {
-        const res = axios.put(`https://localhost:44353/api/Group`, {
+    groups.forEach((group, i) => {
+      const res = axios.put(`https://localhost:44353/api/Group`, {
           ...group,
           show: group.show === true ? 1 : 0,
+          position: i
         });
         res.then((r) => resArr.push(r.status));
-      });
-    }
+    })
+    
     if (resArr.every((e) => e === 200)) {
       toast.success("Atualizado com sucesso!");
       const play = new Audio(audio);
@@ -77,6 +78,15 @@ function App() {
     );
     console.log(groups[id - 1]);
   };
+
+  const handleOnDragEnd = (result: DropResult) => {
+    if(!result.destination) return
+    const items = Array.from(groups)
+    const [reorderedItem] = items.splice(result.source.index, 1)
+    items.splice(result.destination?.index as number, 0, reorderedItem)
+
+    setGroups(items)
+  }
 
   const handleMessageChange = (e: HTMLInputElement, id: number) => {
     setGroups(
@@ -131,6 +141,7 @@ function App() {
               setShow={setShow}
               isLoading={isLoading}
               getGroups={getGroups}
+              handleOnDragEnd={handleOnDragEnd}
             />
           }
           path="/admin"

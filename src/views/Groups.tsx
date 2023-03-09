@@ -22,7 +22,6 @@ const Groups = () => {
         console.log(currentCompany, currentGate)
       }, 5000)
     }
-
   }, [currentCompany, currentGate]);
 
   const getGroups = () => {
@@ -34,7 +33,7 @@ const Groups = () => {
 
   return (
     <div className="row m-0 p-0 vh-100">
-      <Show showingGroups={groups} />
+      <Show showingGroups={[...groups].sort((a, b) => a.position - b.position)} />
       {isLoading && <div className="position-absolute vw-100 vh-100 loadingScreen d-flex align-items-center justify-content-center">
         <div className="d-flex flex-column align-items-center text-light gap-3">
           <div className="spinner-border" role="status"></div>
