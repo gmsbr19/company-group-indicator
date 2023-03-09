@@ -45,9 +45,13 @@ const Show = ({ showingGroups }: Props) => {
                       style={{
                         borderColor: group.color,
                         borderBottom: "2px solid white",
+                        borderTop: "2px solid white",
                       }}
                     >
-                      <i className="bi bi-exclamation-triangle fs-3" style={{backgroundColor: group.color, zIndex: 2, width: "32px", color: "white"}}></i>
+                      <span className="fa-stack fa fs-5" style={{zIndex: 5, width: "35px", height: "10%"}}>
+                        <i className="fa-solid fa-square fa-stack-2x"></i>
+                        <i className="fa-solid fa-triangle-exclamation fa-stack-1x fa-inverse"></i>
+                      </span>
                       <div className="sliding">
                         <span
                           style={{

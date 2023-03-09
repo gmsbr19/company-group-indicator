@@ -27,9 +27,9 @@
   position: relative;
   display: block;
   overflow: hidden;
-  height: 40px;
-  border-left: 2px solid;
-  border-right: 2px solid;
+  height: 44px;
+  background-color: white;
+  padding-left: 6px;
 }
 
 .sliding {
