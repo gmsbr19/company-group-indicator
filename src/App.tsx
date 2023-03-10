@@ -31,13 +31,10 @@ function App() {
       .get(
         `https://localhost:44353/api/Group?currentGate=${currentGate}&currentCompany=${currentCompany}`
       )
-      .then((res) => setGroups(res.data))
+      .then((res) => {setGroups([...res.data].sort((a, b) => a.position - b.position))})
       .then(() => setIsLoading(false));
   };
 
-  function sleep(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
   const setShow = () => {
     const resArr: number[] = [];
     console.log(groups);
@@ -52,8 +49,6 @@ function App() {
     
     if (resArr.every((e) => e === 200)) {
       toast.success("Atualizado com sucesso!");
-      const play = new Audio(audio);
-      play.play();
     }
   };
 
