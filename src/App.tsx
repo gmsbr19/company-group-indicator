@@ -22,7 +22,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-   
+   navigate('/')
   }, []);
 
   const getGroups = () => {
@@ -42,7 +42,9 @@ function App() {
       const res = axios.put(`https://localhost:44353/api/Group`, {
           ...group,
           show: group.show === true ? 1 : 0,
-          position: i
+          position: i,
+          to_seat: !group.to_seat ? 0 : group.to_seat,
+          from_seat: !group.from_seat ? 0 : group.from_seat
         });
         res.then((r) => resArr.push(r.status));
     })

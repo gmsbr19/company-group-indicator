@@ -12,12 +12,12 @@ type Props = {
 
 const Start = ({setCurrentCompany, setCurrentGate, handleCompAndGateChange, currentCompany, currentGate}: Props) => {
   return (
-    <div className="d-flex flex-column align-items-center justify-content-center">
+    <div className="d-flex flex-column align-items-center justify-content-start vw-100 vh-100">
       <img src={logo} />
-      <div>
-        <h4>Selecione o portão e a companhia aérea:</h4>
+      <div className="d-flex justify-content-center align-items-center flex-column p-2">
+        <p className="fs-4 fs-sm-2">Console grupos de embarque:</p>
         <div className="row m-0 p-0 justify-content-end">
-          <div className="col-6 me-0">
+          <div className="col-6 me-0 mb-3 mb-sm-0">
             <span className="fs-6">Companhia aérea: </span>
             <select
               className="form-select"

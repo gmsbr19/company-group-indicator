@@ -1,6 +1,7 @@
 import { group } from "../data";
 import { useLocation } from "react-router-dom";
 import gol from "../assets/gol.png";
+import { useEffect, useState } from "react";
 type Props = {
   showingGroups: group[];
 };
@@ -8,7 +9,14 @@ type Props = {
 const Show = ({ showingGroups }: Props) => {
   const location = useLocation();
   const { pathname } = location;
-  const arrowSize = pathname === "/groups" ? "200" : "128";
+  const [arrowSizeRel, setArrowSizeRel] = useState<number>(window.innerWidth / 15)
+  const arrowSize = pathname === "/groups" ? "200" : arrowSizeRel;
+
+
+  useEffect(() => {
+
+    window.addEventListener('resize', () => {setArrowSizeRel(window.innerWidth / 15)})
+  }, [])
 
   const duration = (length: number) => {
     return length < 30 ? 15 : length / 2.5;
@@ -29,14 +37,14 @@ const Show = ({ showingGroups }: Props) => {
               <img
                 src={gol}
                 alt=""
-                width="130px"
-                style={{ marginBottom: "-50px" }}
+                width="40%"
               />
               <div className="d-flex flex-column">
                 <div className="d-flex flex-column fs-1 justify-content-center ms-3">
                   <span>Grupo</span>
                   <small className="fs-4 text-muted ms-1">Group</small>
                 </div>
+                <div className="d-flex flex-column label-and-seats">
                 <span className="group-label">{group.label}</span>
                 {group.message && (
                   <>
@@ -81,22 +89,23 @@ const Show = ({ showingGroups }: Props) => {
                   </>
                 )}
                 {group.from_seat > 0 && group.to_seat > 0 && (
-                  <span className="align-self-center fs-1">
+                  <span className="align-self-center">
                     Assentos {group.from_seat} a {group.to_seat}
                   </span>
                 )}
+                </div>
               </div>
               {group.priority === 1 && (
                 <div
-                  style={{ height: "40%" }}
+                  style={{ height: "35%" }}
                   className="bg-white text-dark priority-footer w-100 position-absolute bottom-0 d-flex justify-content-center"
                 >
                   <div className="d-flex flex-column align-items-center mt-2">
-                    <h1 className="mb-0">Prioridades por lei</h1>
-                    <p className="text-muted m-0 mb-1 fs-5">
+                    <p className="mb-0">Prioridades por lei</p>
+                    <p className="text-muted m-0 mb-1 fs-6">
                       Special assistance
                     </p>
-                    <div className="fs-2 mt-1 d-flex gap-4">
+                    <div className="mt-1 d-flex gap-4">
                       <i className="fa-solid fa-wheelchair"></i>
                       <i className="fa-solid fa-person-cane"></i>
                       <i className="fa-solid fa-person-breastfeeding"></i>
@@ -106,13 +115,15 @@ const Show = ({ showingGroups }: Props) => {
                   </div>
                 </div>
               )}
-              {group.side === "left" ? (
+              <div className="position-absolute bottom-0 w-100">
+        <div className={`arrow-container ${group.side === 'left' ? 'justify-content-start' : group.side === 'middle' ? 'justify-content-center' : 'justify-content-end'}`}>
+        {group.side === "left" ? (
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width={arrowSize}
                   height={arrowSize}
                   fill={group.priority === 1 ? "black" : "white"}
-                  className="bi bi-arrow-down-left position-absolute bottom-0"
+                  className="bi bi-arrow-down-left"
                   viewBox="0 0 16 16"
                 >
                   <path
@@ -126,7 +137,7 @@ const Show = ({ showingGroups }: Props) => {
                   width={arrowSize}
                   height={arrowSize}
                   fill={group.priority === 1 ? "black" : "white"}
-                  className="bi bi-arrow-down-right position-absolute end-0 bottom-0"
+                  className="bi bi-arrow-down-right"
                   viewBox="0 0 16 16"
                 >
                   <path
@@ -141,9 +152,9 @@ const Show = ({ showingGroups }: Props) => {
                     width={arrowSize}
                     height={arrowSize}
                     fill={group.priority === 1 ? "black" : "white"}
-                    className="bi bi-arrow-down position-absolute start-50 translate-middle"
+                    className="bi bi-arrow-down"
                     viewBox="0 0 16 16"
-                    style={{ bottom: "-55px" }}
+                    style={{marginBottom: '13px'}}
                   >
                     <path
                       fillRule="evenodd"
@@ -152,6 +163,8 @@ const Show = ({ showingGroups }: Props) => {
                   </svg>
                 )
               )}
+        </div>
+      </div>
             </div>
           )
       )}

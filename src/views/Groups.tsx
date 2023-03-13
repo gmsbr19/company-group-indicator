@@ -6,7 +6,6 @@ import usePrevious from "../usePrevious";
 import audio from "../assets/sounds/call-to-attention.mp3";
 
 const Groups = () => {
-  const [groups, setGroups] = useState<group[]>([])
   const [sortedGroups, setSortedGroups] = useState<group[]>([])
   const [currentCompany, setCurrentCompany] = useState<string>("")
   const [currentGate, setCurrentGate] = useState<string>("")
@@ -68,12 +67,10 @@ const Groups = () => {
       .get(`https://localhost:44353/api/Group?currentGate=${currentGate}&currentCompany=${currentCompany}`)
       .then((res) => {
         const newGroups = res.data;
-        setGroups(newGroups);
         const newSortedGroups = [...newGroups].sort((a, b) => a.position - b.position);
         setSortedGroups(newSortedGroups);
         setIsLoading(false);
       })
-  
   };
 
   return (

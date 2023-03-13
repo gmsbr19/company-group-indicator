@@ -1,8 +1,9 @@
 import { group } from "../data";
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Show from "./Show";
 import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
+import useScreenOrientation from 'react-hook-screen-orientation'
 
 type Props = {
   groups: group[];
@@ -29,7 +30,9 @@ const Admin = ({
   handleOnDragEnd,
   isLoading,
 }: Props) => {
+  const navigate = useNavigate()
   const checkboxRef = useRef<HTMLInputElement>(null);
+  const screenOrientation = useScreenOrientation()
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
@@ -50,16 +53,16 @@ const Admin = ({
           </div>
         </div>
       )}
-      <div className="h-75 w-100 bg-black d-flex flex-column align-items-center">
-        <div className="bg-light h-100 w-75 row m-0 bg">
+      <div className={`h-75 w-100 bg-black flex-column align-items-center show`}>
+        <div className="bg-light h-100 w-75 row m-0">
           <Show showingGroups={groups} />
         </div>
       </div>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="configs" direction="horizontal">
+        <Droppable droppableId="configs" direction={`${screenOrientation === 'portrait-primary' ? 'vertical' : 'horizontal'}`}>
           {(provided) => (
             <ul
-              className="d-flex gap-2 row vw-100 px-4 mt-2"
+              className={`d-flex gap-2 row vw-100 px-4 mt-2 mb-0 ${screenOrientation === 'portrait-primary' ? 'flex-column mt-5' : 'flex-row'}`}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
@@ -73,7 +76,7 @@ const Admin = ({
                     >
                       <div className="card-header d-flex gap-1 align-items-center px-2">
                         <span {...provided.dragHandleProps} className="d-flex align-items-center justify-content-center" style={{width: "21px"}}>
-                          <i className="fa-solid fa-grip-lines-vertical fs-5"></i>
+                          <i className={`fa-solid fa-grip-lines${screenOrientation === 'portrait-primary' ? '' : '-vertical'} fs-5`}></i>
                         </span>
                         Grupo {group.label} |
                         <div className="form-check d-flex align-items-center gap-1">
@@ -96,11 +99,11 @@ const Admin = ({
                       <div className="card-body row">
                         <div className="d-flex flex-column col-6">
                           <span className="fs-6 mb-1">
-                            Assentos grupo {group.label}:
+                            Assentos:
                           </span>
                           <div className="row align-items-center">
-                            <div className="col-6 d-flex gap-2">
-                              <label className="form-label">De</label>
+                            <div className="col-12 col-xl-6 d-flex">
+                              <label className="form-label me-2">De</label>
                               <input
                                 type="number"
                                 id="from"
@@ -109,12 +112,12 @@ const Admin = ({
                                   handleFromChange(e.target, group.id)
                                 }
                                 value={
-                                  group.from_seat > 0 ? group.from_seat : 0
+                                  group.from_seat > 0 ? group.from_seat : ''
                                 }
                               />
                             </div>
-                            <div className="col-6 d-flex gap-2">
-                              <label className="form-label">Até</label>
+                            <div className="col-12 col-xl-6 d-flex">
+                              <label className="form-label me-1">Até</label>
                               <input
                                 type="number"
                                 id="to"
@@ -122,14 +125,14 @@ const Admin = ({
                                 onChange={(e) =>
                                   handleToChange(e.target, group.id)
                                 }
-                                value={group.to_seat > 0 ? group.to_seat : 0}
+                                value={group.to_seat > 0 ? group.to_seat : ''}
                               />
                             </div>
                           </div>
                         </div>
                         <div className="col-6 d-flex flex-column">
                           <span className="fs-6 mb-1">
-                            Selecione o lado da fila:{" "}
+                            Lado da fila:{" "}
                           </span>
                           <select
                             className="form-select"
@@ -166,19 +169,21 @@ const Admin = ({
           )}
         </Droppable>
       </DragDropContext>
-      {groups.length > 1 && (
-        <button
-          className="btn btn-outline-primary align-self-end me-4 my-2"
-          onClick={() => {
-            setShow();
-          }}
-        >
-          <span>Aplicar</span>
-        </button>
-      )}
+      <footer className="d-flex w-100 align-items-end my-2 justify-content-end pe-4 pb-2">
+        {groups.length > 1 && (
+          <button
+            className="btn btn-outline-primary"
+            onClick={() => {
+              setShow();
+            }}
+          >
+            <span>Aplicar</span>
+          </button>
+        )}
+      </footer>
       <a
         href="/groups"
-        className="btn btn-primary position-absolute mt-2 me-2"
+        className="btn btn-primary position-absolute mt-2 me-2 d-none"
         style={{ right: "0px" }}
         target="_blank"
       >
@@ -187,10 +192,17 @@ const Admin = ({
       </a>
       <Link
         to="/"
-        className="btn btn-primary position-absolute mt-2 ms-2 backBtn"
+        className="btn btn-primary position-absolute mt-2 ms-2 backBtn d-none d-md-block"
         style={{ left: "0px" }}
       >
         <i className="fa-solid fa-arrow-left"></i>
+      </Link>
+      <Link
+        to="/"
+        className="p-2 position-absolute mt-2 ms-2 backBtn d-md-none"
+        style={{ left: "0px" }}
+      >
+        <i className="fa-solid fa-arrow-left fs-2"></i>
       </Link>
     </div>
   );
