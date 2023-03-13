@@ -58,11 +58,17 @@ const Admin = ({
           <Show showingGroups={groups} />
         </div>
       </div>
+      <Link
+        to="/"
+        className="ps-2 pt-2 backBtn d-md-none align-self-start"
+      >
+        <i className="fa-solid fa-arrow-left fs-2"></i>
+      </Link>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="configs" direction={`${screenOrientation === 'portrait-primary' ? 'vertical' : 'horizontal'}`}>
+        <Droppable droppableId="configs" direction={`${screenOrientation === 'portrait-primary' && window.innerWidth < 800 ? 'vertical' : 'horizontal'}`}>
           {(provided) => (
             <ul
-              className={`d-flex gap-2 row vw-100 px-4 mt-2 mb-0 ${screenOrientation === 'portrait-primary' ? 'flex-column mt-5' : 'flex-row'}`}
+              className={`d-flex gap-2 row mt-1 vw-100 px-4 mb-0 ul-cards ${screenOrientation === 'portrait-primary' && window.innerWidth < 800 ? 'flex-column' : 'flex-row'}`}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
@@ -76,7 +82,7 @@ const Admin = ({
                     >
                       <div className="card-header d-flex gap-1 align-items-center px-2">
                         <span {...provided.dragHandleProps} className="d-flex align-items-center justify-content-center" style={{width: "21px"}}>
-                          <i className={`fa-solid fa-grip-lines${screenOrientation === 'portrait-primary' ? '' : '-vertical'} fs-5`}></i>
+                          <i className={`fa-solid fa-grip-lines${screenOrientation === 'portrait-primary' && window.innerWidth < 800 ? '' : '-vertical'} fs-5`}></i>
                         </span>
                         Grupo {group.label} |
                         <div className="form-check d-flex align-items-center gap-1">
@@ -196,13 +202,6 @@ const Admin = ({
         style={{ left: "0px" }}
       >
         <i className="fa-solid fa-arrow-left"></i>
-      </Link>
-      <Link
-        to="/"
-        className="p-2 position-absolute mt-2 ms-2 backBtn d-md-none"
-        style={{ left: "0px" }}
-      >
-        <i className="fa-solid fa-arrow-left fs-2"></i>
       </Link>
     </div>
   );

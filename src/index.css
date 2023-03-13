@@ -16,13 +16,31 @@
   }
 }
 
-@media (min-width: 819px) {
+
+@media (min-width: 767px) and (orientation: portrait) and (min-height: 767px), (min-width: 1180px) {
   .show{
     display: flex !important;
-    height: 75% !important;
+    height: 50% !important;
+  }
+
+  .label-and-seats .group-label {
+    margin-top: 50px !important;
+  }
+
+  .card {
+    width: 30%;
   }
 }
 
+@media (height: 1180px) and (width: 820px) {
+  .show{
+    display: flex !important;
+    height: 30% !important;
+  }
+  .label-and-seats .group-label {
+    margin-top: 50px !important;
+  }
+}
 /* ---------------------------------- */
 
 /* Label do show */
@@ -42,6 +60,10 @@
 @media (min-width: 575px) {
   .label-and-seats {
     margin-top: -5vw;
+  }
+
+  .group-label {
+    font-size: 5vw;
   }
 
   .label-and-seats .group-label {

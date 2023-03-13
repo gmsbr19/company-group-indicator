@@ -1,18 +1,14 @@
 import { Routes, Route, useNavigate } from "react-router-dom";
 import Admin from "./views/Admin";
-import Show from "./views/Show";
-import axios, { AxiosResponse } from "axios";
+import axios from "axios";
 import Groups from "./views/Groups";
 import Start from "./views/Start";
 
 import { group } from "./data";
-import { useEffect, useState, DragEvent } from "react";
+import { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import audio from "./assets/sounds/call-to-attention.mp3";
 import { DropResult } from "react-beautiful-dnd";
-
-// npm install @reduxjs/toolkit react-redux
 
 function App() {
   const [groups, setGroups] = useState<group[]>([]);
@@ -22,7 +18,7 @@ function App() {
   const navigate = useNavigate();
 
   useEffect(() => {
-   navigate('/')
+    navigate("/");
   }, []);
 
   const getGroups = () => {
@@ -31,7 +27,9 @@ function App() {
       .get(
         `https://localhost:44353/api/Group?currentGate=${currentGate}&currentCompany=${currentCompany}`
       )
-      .then((res) => {setGroups([...res.data].sort((a, b) => a.position - b.position))})
+      .then((res) => {
+        setGroups([...res.data].sort((a, b) => a.position - b.position));
+      })
       .then(() => setIsLoading(false));
   };
 
@@ -40,15 +38,15 @@ function App() {
     console.log(groups);
     groups.forEach((group, i) => {
       const res = axios.put(`https://localhost:44353/api/Group`, {
-          ...group,
-          show: group.show === true ? 1 : 0,
-          position: i,
-          to_seat: !group.to_seat ? 0 : group.to_seat,
-          from_seat: !group.from_seat ? 0 : group.from_seat
-        });
-        res.then((r) => resArr.push(r.status));
-    })
-    
+        ...group,
+        show: group.show === true ? 1 : 0,
+        position: i,
+        to_seat: !group.to_seat ? 0 : group.to_seat,
+        from_seat: !group.from_seat ? 0 : group.from_seat,
+      });
+      res.then((r) => resArr.push(r.status));
+    });
+
     if (resArr.every((e) => e === 200)) {
       toast.success("Atualizado com sucesso!");
     }
@@ -77,13 +75,13 @@ function App() {
   };
 
   const handleOnDragEnd = (result: DropResult) => {
-    if(!result.destination) return
-    const items = Array.from(groups)
-    const [reorderedItem] = items.splice(result.source.index, 1)
-    items.splice(result.destination?.index as number, 0, reorderedItem)
+    if (!result.destination) return;
+    const items = Array.from(groups);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination?.index as number, 0, reorderedItem);
 
-    setGroups(items)
-  }
+    setGroups(items);
+  };
 
   const handleMessageChange = (e: HTMLInputElement, id: number) => {
     setGroups(
