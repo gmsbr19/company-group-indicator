@@ -1,16 +1,16 @@
 export type group = {
-    id: number
-    label: string
-    color: string
-    show: boolean
-    from_seat: number
-    to_seat: number
-    side: string
-    message: string
-    position: number
-    priority?: number | boolean
-    company_id: number
-    gate_id: number
+  id: number
+  label: string
+  color: string
+  show: boolean
+  from_seat: number
+  to_seat: number
+  side: string
+  message: string
+  position: number
+  priority?: number | boolean
+  company_id: number
+  gate_id: number
 }
 
 // export const golGroups: group[] = [

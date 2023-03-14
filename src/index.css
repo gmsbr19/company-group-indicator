@@ -4,21 +4,14 @@
 
 /* Show configs */
 
-.show{
+.show {
   display: none;
   font-size: 1.8vw !important;
 }
 
-@media (min-height: 819px) and (max-width: 1181) {
-  .show{
-    display: flex !important;
-    height: 70% !important;
-  }
-}
-
-
-@media (min-width: 767px) and (orientation: portrait) and (min-height: 767px), (min-width: 1180px) {
-  .show{
+@media (min-width: 767px) and (orientation: portrait) and (min-height: 767px),
+  (width: 1024px) {
+  .show {
     display: flex !important;
     height: 50% !important;
   }
@@ -33,9 +26,19 @@
 }
 
 @media (height: 1180px) and (width: 820px) {
-  .show{
+  .show {
     display: flex !important;
     height: 30% !important;
+  }
+  .label-and-seats .group-label {
+    margin-top: 50px !important;
+  }
+}
+
+@media (min-width: 1500px) and (min-height: 930px) {
+  .show {
+    display: flex !important;
+    height: 75% !important;
   }
   .label-and-seats .group-label {
     margin-top: 50px !important;
@@ -72,7 +75,6 @@
 }
 
 @media (min-width: 1220px) {
-
   .group-label {
     font-size: 130px;
     margin-top: 0px;
@@ -104,31 +106,27 @@
 }
 
 .message-container {
-  position: relative;
-  display: block;
+  background-color: #fefb54;
+  padding: 6px;
   overflow: hidden;
-  height: 44px;
-  background-color: white;
-  padding-left: 6px;
+  display: flex;
+  align-items: center;
 }
 
 .sliding {
-  color: yellow;
+  color: #f91305;
   position: absolute;
   display: block;
   margin: auto auto;
   white-space: nowrap;
   overflow: hidden;
-  min-width: 100%;
-  height: 100%;
-  text-align: center;
+  width: 100%;
+  padding-right: 5px;
 }
 
 .sliding span {
   display: inline-block;
   padding-left: 100%;
-  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
-    1px 1px 0 #000;
   white-space: nowrap;
   min-width: 100%;
   height: 100%;
@@ -153,7 +151,7 @@
   }
 }
 
-.arrow-container{
+.arrow-container {
   width: 100%;
   display: flex;
   align-items: flex-end;

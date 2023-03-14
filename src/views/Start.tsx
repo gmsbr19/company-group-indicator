@@ -1,16 +1,22 @@
-import logo from "../assets/imgs/airport_logo.jpg";
-import { group } from "../data";
-import { Link } from "react-router-dom";
+import logo from '../assets/imgs/airport_logo.jpg'
+import { group } from '../data'
+import { Link } from 'react-router-dom'
 
 type Props = {
-    setCurrentCompany: React.Dispatch<React.SetStateAction<number>>;
-    setCurrentGate: React.Dispatch<React.SetStateAction<number>>;
-    handleCompAndGateChange: () => void;
-    currentGate: number;
-    currentCompany: number;
+  setCurrentCompany: React.Dispatch<React.SetStateAction<number>>
+  setCurrentGate: React.Dispatch<React.SetStateAction<number>>
+  handleCompAndGateChange: () => void
+  currentGate: number
+  currentCompany: number
 }
 
-const Start = ({setCurrentCompany, setCurrentGate, handleCompAndGateChange, currentCompany, currentGate}: Props) => {
+const Start = ({
+  setCurrentCompany,
+  setCurrentGate,
+  handleCompAndGateChange,
+  currentCompany,
+  currentGate,
+}: Props) => {
   return (
     <div className="d-flex flex-column align-items-center justify-content-start vw-100 vh-100">
       <img src={logo} />
@@ -58,16 +64,16 @@ const Start = ({setCurrentCompany, setCurrentGate, handleCompAndGateChange, curr
           </div>
           <div className="col-12 mt-2 d-flex justify-content-end">
             <button
-                className="btn btn-primary col-4"
-                onClick={() => handleCompAndGateChange()}
+              className="btn btn-primary col-4"
+              onClick={() => handleCompAndGateChange()}
             >
-                Entrar
+              Entrar
             </button>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Start;
+export default Start

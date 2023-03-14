@@ -4,6 +4,12 @@
   "version": "0.0.0",
   "type": "module",
   "main": "./main.ts",
+  "prettier": {
+    "trailingComma": "es5",
+    "tabWidth": 2,
+    "semi": false,
+    "singleQuote": true
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",

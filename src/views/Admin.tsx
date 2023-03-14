@@ -1,22 +1,27 @@
-import { group } from "../data";
-import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Show from "./Show";
-import { DragDropContext, Droppable, Draggable, DropResult } from "react-beautiful-dnd";
+import { group } from '../data'
+import { useEffect, useRef, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import Show from './Show'
+import {
+  DragDropContext,
+  Droppable,
+  Draggable,
+  DropResult,
+} from 'react-beautiful-dnd'
 import useScreenOrientation from 'react-hook-screen-orientation'
 
 type Props = {
-  groups: group[];
-  toggleShow: (id: number) => void;
-  setShow: () => void;
-  handleSideChange: (e: HTMLSelectElement, id: number) => void;
-  handleFromChange: (e: HTMLInputElement, id: number) => void;
-  handleToChange: (e: HTMLInputElement, id: number) => void;
-  handleMessageChange: (e: HTMLInputElement, id: number) => void;
-  isLoading: boolean;
-  getGroups: () => void;
-  handleOnDragEnd: (result: DropResult) => void;
-};
+  groups: group[]
+  toggleShow: (id: number) => void
+  setShow: () => void
+  handleSideChange: (e: HTMLSelectElement, id: number) => void
+  handleFromChange: (e: HTMLInputElement, id: number) => void
+  handleToChange: (e: HTMLInputElement, id: number) => void
+  handleMessageChange: (e: HTMLInputElement, id: number) => void
+  isLoading: boolean
+  getGroups: () => void
+  handleOnDragEnd: (result: DropResult) => void
+}
 
 const Admin = ({
   groups,
@@ -31,17 +36,17 @@ const Admin = ({
   isLoading,
 }: Props) => {
   const navigate = useNavigate()
-  const checkboxRef = useRef<HTMLInputElement>(null);
+  const checkboxRef = useRef<HTMLInputElement>(null)
   const screenOrientation = useScreenOrientation()
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      event.preventDefault();
-      event.returnValue = "";
-    };
+      event.preventDefault()
+      event.returnValue = ''
+    }
 
-    window.addEventListener("beforeunload", handleBeforeUnload);
-  }, []);
+    window.addEventListener('beforeunload', handleBeforeUnload)
+  }, [])
 
   return (
     <div className="d-flex align-items-center vw-100 vh-100 flex-column">
@@ -53,22 +58,33 @@ const Admin = ({
           </div>
         </div>
       )}
-      <div className={`h-75 w-100 bg-black flex-column align-items-center show`}>
+      <div
+        className={`h-75 w-100 bg-black flex-column align-items-center show`}
+      >
         <div className="bg-light h-100 w-75 row m-0">
           <Show showingGroups={groups} />
         </div>
       </div>
-      <Link
-        to="/"
-        className="ps-2 pt-2 backBtn d-md-none align-self-start"
-      >
+      <Link to="/" className="ps-2 pt-2 backBtn d-md-none align-self-start">
         <i className="fa-solid fa-arrow-left fs-2"></i>
       </Link>
       <DragDropContext onDragEnd={handleOnDragEnd}>
-        <Droppable droppableId="configs" direction={`${screenOrientation === 'portrait-primary' && window.innerWidth < 800 ? 'vertical' : 'horizontal'}`}>
+        <Droppable
+          droppableId="configs"
+          direction={`${
+            screenOrientation === 'portrait-primary' && window.innerWidth < 800
+              ? 'vertical'
+              : 'horizontal'
+          }`}
+        >
           {(provided) => (
             <ul
-              className={`d-flex gap-2 row mt-1 vw-100 px-4 mb-0 ul-cards ${screenOrientation === 'portrait-primary' && window.innerWidth < 800 ? 'flex-column' : 'flex-row'}`}
+              className={`d-flex gap-2 row mt-1 vw-100 px-4 mb-0 ul-cards ${
+                screenOrientation === 'portrait-primary' &&
+                window.innerWidth < 800
+                  ? 'flex-column'
+                  : 'flex-row'
+              }`}
               {...provided.droppableProps}
               ref={provided.innerRef}
             >
@@ -81,8 +97,19 @@ const Admin = ({
                       ref={provided.innerRef}
                     >
                       <div className="card-header d-flex gap-1 align-items-center px-2">
-                        <span {...provided.dragHandleProps} className="d-flex align-items-center justify-content-center" style={{width: "21px"}}>
-                          <i className={`fa-solid fa-grip-lines${screenOrientation === 'portrait-primary' && window.innerWidth < 800 ? '' : '-vertical'} fs-5`}></i>
+                        <span
+                          {...provided.dragHandleProps}
+                          className="d-flex align-items-center justify-content-center"
+                          style={{ width: '21px' }}
+                        >
+                          <i
+                            className={`fa-solid fa-grip-lines${
+                              screenOrientation === 'portrait-primary' &&
+                              window.innerWidth < 800
+                                ? ''
+                                : '-vertical'
+                            } fs-5`}
+                          ></i>
                         </span>
                         Grupo {group.label} |
                         <div className="form-check d-flex align-items-center gap-1">
@@ -104,9 +131,7 @@ const Admin = ({
                       </div>
                       <div className="card-body row">
                         <div className="d-flex flex-column col-6">
-                          <span className="fs-6 mb-1">
-                            Assentos:
-                          </span>
+                          <span className="fs-6 mb-1">Assentos:</span>
                           <div className="row align-items-center">
                             <div className="col-12 col-xl-6 d-flex">
                               <label className="form-label me-2">De</label>
@@ -137,9 +162,7 @@ const Admin = ({
                           </div>
                         </div>
                         <div className="col-6 d-flex flex-column">
-                          <span className="fs-6 mb-1">
-                            Lado da fila:{" "}
-                          </span>
+                          <span className="fs-6 mb-1">Lado da fila: </span>
                           <select
                             className="form-select"
                             onChange={(e) =>
@@ -180,7 +203,7 @@ const Admin = ({
           <button
             className="btn btn-outline-primary"
             onClick={() => {
-              setShow();
+              setShow()
             }}
           >
             <span>Aplicar</span>
@@ -190,21 +213,21 @@ const Admin = ({
       <a
         href="/groups"
         className="btn btn-primary position-absolute mt-2 me-2 d-none"
-        style={{ right: "0px" }}
+        style={{ right: '0px' }}
         target="_blank"
       >
-        Abrir visualização{" "}
+        Abrir visualização{' '}
         <i className="fa-solid fa-arrow-up-right-from-square"></i>
       </a>
       <Link
         to="/"
         className="btn btn-primary position-absolute mt-2 ms-2 backBtn d-none d-md-block"
-        style={{ left: "0px" }}
+        style={{ left: '0px' }}
       >
         <i className="fa-solid fa-arrow-left"></i>
       </Link>
     </div>
-  );
-};
+  )
+}
 
-export default Admin;
+export default Admin
