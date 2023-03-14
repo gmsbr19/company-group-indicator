@@ -23,7 +23,7 @@ type Props = {
   handleOnDragEnd: (result: DropResult) => void
 }
 
-const Admin = ({
+const Console = ({
   groups,
   toggleShow,
   setShow,
@@ -230,4 +230,4 @@ const Admin = ({
   )
 }
 
-export default Admin
+export default Console

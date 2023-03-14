@@ -1,5 +1,5 @@
 import { Routes, Route, useNavigate } from 'react-router-dom'
-import Admin from './views/Admin'
+import Console from './views/Console'
 import axios from 'axios'
 import Groups from './views/Groups'
 import Start from './views/Start'
@@ -57,7 +57,7 @@ function App() {
       document.cookie = `currentGate=${currentGate}`
       document.cookie = `currentCompany=${currentCompany}`
       getGroups()
-      navigate('/admin')
+      navigate('/console')
     } else {
       window.alert('Insira a companhia e o portão corretamente')
       return false
@@ -124,7 +124,7 @@ function App() {
       <Routes>
         <Route
           element={
-            <Admin
+            <Console
               groups={groups}
               handleSideChange={handleSideChange}
               toggleShow={toggleShow}
@@ -137,7 +137,7 @@ function App() {
               handleOnDragEnd={handleOnDragEnd}
             />
           }
-          path="/admin"
+          path="/console"
         />
         <Route element={<Groups />} path="/groups" />
         <Route
