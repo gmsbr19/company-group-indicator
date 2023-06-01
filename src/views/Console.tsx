@@ -111,7 +111,7 @@ const Console = ({
                             } fs-5`}
                           ></i>
                         </span>
-                        Grupo {group.label} |
+                        {group.label}{" "} |
                         <div className="form-check d-flex align-items-center gap-1">
                           <input
                             type="checkbox"
@@ -130,7 +130,7 @@ const Console = ({
                         </div>
                       </div>
                       <div className="card-body row">
-                        <div className="d-flex flex-column col-6">
+                        <div className="d-flex flex-column col-12">
                           <span className="fs-6 mb-1">Assentos:</span>
                           <div className="row align-items-center">
                             <div className="col-12 col-xl-6 d-flex">
@@ -161,7 +161,7 @@ const Console = ({
                             </div>
                           </div>
                         </div>
-                        <div className="col-6 d-flex flex-column">
+                        <div className="col-12 d-flex flex-column">
                           <span className="fs-6 mb-1">Lado da fila: </span>
                           <select
                             className="form-select"

@@ -1,6 +1,8 @@
 import { group } from '../data'
 import { useLocation } from 'react-router-dom'
 import gol from '../assets/gol.png'
+import azul from '../assets/azul.png'
+import latam from '../assets/latam.png'
 import { useEffect, useState } from 'react'
 type Props = {
   showingGroups: group[]
@@ -36,7 +38,19 @@ const Show = ({ showingGroups }: Props) => {
               } h-100 text-white position-relative p-0 overflow-hidden`}
               style={{ backgroundColor: group.color }}
             >
-              <img src={gol} alt="" width="40%" style={{ maxWidth: '180px' }} />
+              <img
+                src={
+                  group.company_id === 1
+                    ? gol
+                    : group.company_id === 2
+                    ? latam
+                    : azul
+                }
+                className='bg-white'
+                alt=""
+                width="40%"
+                style={{ maxWidth: '180px' }}
+              />
               <div className="d-flex flex-column">
                 <div className="d-flex flex-column fs-1 justify-content-center ms-3">
                   <span>Grupo</span>

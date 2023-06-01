@@ -10,6 +10,7 @@ import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { DropResult } from 'react-beautiful-dnd'
 
+
 function App() {
   const [groups, setGroups] = useState<group[]>([])
   const [currentGate, setCurrentGate] = useState<number>(0)
@@ -25,7 +26,7 @@ function App() {
     setIsLoading(true)
     axios
       .get(
-        `https://localhost:44353/api/Group?currentGate=${currentGate}&currentCompany=${currentCompany}`
+        `http://127.0.0.1:5000/group?gate=${currentGate}&company=${currentCompany}`
       )
       .then((res) => {
         setGroups([...res.data].sort((a, b) => a.position - b.position))
@@ -35,12 +36,12 @@ function App() {
 
   const setShow = () => {
     const resArr: number[] = []
-    console.log(groups)
     groups.forEach((group, i) => {
-      const res = axios.put(`https://localhost:44353/api/Group`, {
+      const res = axios.put(`http://127.0.0.1:5000/group`, {
         ...group,
         show: group.show === true ? 1 : 0,
         position: i,
+        message: group.message,
         to_seat: !group.to_seat ? 0 : group.to_seat,
         from_seat: !group.from_seat ? 0 : group.from_seat,
       })
